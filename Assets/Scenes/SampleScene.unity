@@ -1281,6 +1281,7 @@ GameObject:
   - component: {fileID: 913981176}
   - component: {fileID: 913981179}
   - component: {fileID: 913981180}
+  - component: {fileID: 913981181}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1501,6 +1502,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &913981181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913981173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ffca89c0b8f0e645ab9f59139189ae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    mobType: 0
+    damage: 0
+    cooldownTime: 0
+    currentHP: 0
+    maxHP: 5
 --- !u!1 &1095262821
 GameObject:
   m_ObjectHideFlags: 0
