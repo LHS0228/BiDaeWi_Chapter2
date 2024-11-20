@@ -67,6 +67,8 @@ public class PlayerAttack : MonoBehaviour
 
         Debug.DrawRay(transform.position, direction * rayDistance, Color.red);
 
+        //리볼더
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             playerController.anim.Play("Pistol");
@@ -81,6 +83,48 @@ public class PlayerAttack : MonoBehaviour
                 {
 
                     if(scanObject.CompareTag("Enemy"))
+                    {
+                        scanObject.GetComponent<MobBase>().TakeDamage(1);
+                    }
+
+                    cameraShake.Shake(0.2f, 0.1f);
+
+                    if (scanObject.CompareTag("Enemy"))
+                    {
+                        GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
+                        Destroy(hitEffect, 1f);
+                        CreateLineEffect(transform.position, direction, rayDistance);
+                    }
+                    else
+                    {
+                        GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
+                        Destroy(hitEffect, 1f);
+                        CreateLineEffect(transform.position, direction, rayDistance);
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("바닥에 쏨");
+                CreateLineEffect(transform.position, direction, rayDistance);
+            }
+        }
+        */
+        //라이플
+        if (Input.GetMouseButton(0))
+        {
+            playerController.anim.Play("Pistol");
+            StartCoroutine(ReloadTime());
+            if (scanObject != null)
+            {
+                Debug.Log("공격 물체 :" + attackHit.collider.name);
+                CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+
+                //이펙트 발동
+                if (cameraShake != null)
+                {
+
+                    if (scanObject.CompareTag("Enemy"))
                     {
                         scanObject.GetComponent<MobBase>().TakeDamage(1);
                     }
@@ -134,7 +178,7 @@ public class PlayerAttack : MonoBehaviour
         playerController.isMoveStop = true;
         isAttackStop = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         /*
         switch (attackType)
