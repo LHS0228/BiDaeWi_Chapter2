@@ -1824,7 +1824,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1993787827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1837,8 +1837,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82df93820bfe59244aa3231d1a78d412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 497418182136783019, guid: d818551c8231b064b8c4fd30cb2956b5, type: 3}
+  BulletPrefab: {fileID: 4650383781737584764, guid: d818551c8231b064b8c4fd30cb2956b5, type: 3}
   SpawnPoint: {fileID: 2008283904}
+  attackTerm: 0.5
+  target: {fileID: 913981175}
 --- !u!95 &1993787828
 Animator:
   serializedVersion: 5
