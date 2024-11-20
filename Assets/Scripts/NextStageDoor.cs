@@ -76,6 +76,7 @@ public class NextStageDoor : MonoBehaviour
                 {
                     Debug.Log("¿‘¿Â");
                     guideText.SetActive(false);
+                    gameObject.SetActive(false);
                     playerController.isPlayerStop = false;
                     isChice = false;
                 }

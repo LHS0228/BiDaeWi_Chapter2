@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1edc4b0bde415a94da3676553b1ea680
+guid: 873e2da21470cd947bd179fc1fb77b73
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gun-Sheet_0
+      name: Player_Pistol_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26272bdb077f8d64ebc4b532e41f92b0
-      internalID: -298906942
+      spriteID: ad44b68e00a55cb4aa11e4997855f8cb
+      internalID: -1644309305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_1
+      name: Player_Pistol_1
       rect:
         serializedVersion: 2
         x: 64
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fab74d4271410c642b1ef9c5bd9bc8e2
-      internalID: -349511547
+      spriteID: 32cb2330e61585647ad4f8c665ca075f
+      internalID: -1977507620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_2
+      name: Player_Pistol_2
       rect:
         serializedVersion: 2
         x: 128
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9617a1df1b38f184ea0e90a832c73ca7
-      internalID: 296970065
+      spriteID: 30911ea3fd820794dbbf38021197fa6c
+      internalID: 249942768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gun-Sheet_3
+      name: Player_Pistol_3
       rect:
         serializedVersion: 2
         x: 192
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 210d60264cf394644a7aef25aa3f8883
-      internalID: 866386144
+      spriteID: 9900473aac456854a9135b3c95acf20a
+      internalID: 1864018780
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      gun-Sheet_0: -298906942
-      gun-Sheet_1: -349511547
-      gun-Sheet_2: 296970065
-      gun-Sheet_3: 866386144
+      Player_Pistol_0: -1644309305
+      Player_Pistol_1: -1977507620
+      Player_Pistol_2: 249942768
+      Player_Pistol_3: 1864018780
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

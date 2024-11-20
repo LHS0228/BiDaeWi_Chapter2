@@ -20,13 +20,25 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject gunEffectPrefab;
     [SerializeField] private GameObject hitEffectPrefab_Object;
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
+    private PlayerController playerController;
 
     private GameObject scanObject;
     public float maxRayDistance = 10f; // Raycast 거리를 설정합니다.
+    public bool isAttackStop;
+
+    public AttackType attackType;
+
+    private void Awake()
+    {
+        playerController = GetComponentInParent<PlayerController>();
+    }
 
     void Update()
     {
-        HitCastScan();
+        if (!isAttackStop)
+        {
+            HitCastScan();
+        }
     }
 
     //공격 스캔
@@ -57,6 +69,8 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            playerController.anim.Play("Pistol");
+            StartCoroutine(ReloadTime());
             if (scanObject != null)
             {
                 Debug.Log("공격 물체 :" + attackHit.collider.name);
@@ -65,6 +79,7 @@ public class PlayerAttack : MonoBehaviour
                 //이펙트 발동
                 if (cameraShake != null)
                 {
+
                     if(scanObject.CompareTag("Enemy"))
                     {
                         scanObject.GetComponent<MobBase>().TakeDamage(1);
@@ -110,5 +125,40 @@ public class PlayerAttack : MonoBehaviour
 
         // 일정 시간 후 이펙트 삭제
         Destroy(gunEffect, 0.3f); // 이펙트가 0.3초 후 제거
+    }
+
+
+    IEnumerator ReloadTime()
+    {
+        playerController.isJumpStop = true;
+        playerController.isMoveStop = true;
+        isAttackStop = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        /*
+        switch (attackType)
+        {
+            case AttackType.None:
+                yield return new WaitForSeconds(0.5f);
+                break;
+
+            case AttackType.Pistol:
+                yield return new WaitForSeconds(0.5f);
+                break;
+
+            case AttackType.ShotGun:
+                yield return new WaitForSeconds(0.5f);
+                break;
+
+            case AttackType.Sniper:
+                yield return new WaitForSeconds(0.5f);
+                break;
+        }
+        */
+
+        playerController.isJumpStop = false;
+        playerController.isMoveStop = false;
+        isAttackStop = false;
     }
 }

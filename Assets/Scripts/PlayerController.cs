@@ -7,9 +7,9 @@ using UnityEngine.Timeline;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D rigid;
-    SpriteRenderer spriteRenderer;
-    Animator anim;
+    [HideInInspector] public Rigidbody2D rigid;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public Animator anim;
 
     private bool isGround;
     private float jumpScan = 1.5f;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lowJump = 5;
     [SerializeField] private float highJump = 2;
 
-    /*[HideInInspector]*/ public bool isPlayerStop;
+    [HideInInspector] public bool isPlayerStop;
     [HideInInspector] public bool isMoveStop;
     [HideInInspector] public bool isJumpStop;
 
@@ -56,8 +56,12 @@ public class PlayerController : MonoBehaviour
                 JumpSystem();
             }
         }
-
         else
+        {
+            anim.SetBool("isWalk", false);
+        }
+
+        if(isPlayerStop || isMoveStop)
         {
             anim.SetBool("isWalk", false);
         }
@@ -86,24 +90,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputValue value)
     {
-        if (!isPlayerStop && !isMoveStop)
-        {
-            inputVec = value.Get<Vector2>();
+        inputVec = value.Get<Vector2>();
 
-            switch (value.Get<Vector2>().x)
-            {
-                case 1:
-                    spriteRenderer.flipX = false;
-                    Debug.Log("가나다");
-                    break;
-                case -1:
-                    spriteRenderer.flipX = true;
-                    Debug.Log("가나다나");
-                    break;
-                case 0:
-                    break;
-            }
+        switch (value.Get<Vector2>().x)
+        {
+            case 1:
+                spriteRenderer.flipX = false;
+                Debug.Log("가나다");
+                break;
+            case -1:
+                spriteRenderer.flipX = true;
+                Debug.Log("가나다나");
+                break;
+            case 0:
+                break;
         }
+        
     }
 
     private void OnJump(InputValue value)
