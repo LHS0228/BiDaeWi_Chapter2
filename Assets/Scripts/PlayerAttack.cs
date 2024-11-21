@@ -20,17 +20,24 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject gunEffectPrefab;
     [SerializeField] private GameObject hitEffectPrefab_Object;
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
-    private PlayerController playerController;
 
-    private GameObject scanObject;
-    public float maxRayDistance = 10f; // Raycast 거리를 설정합니다.
-    public bool isAttackStop;
+    private PlayerController playerController;
+    private BulletManagement BulletManagement;
 
     public AttackType attackType;
+    public bool isAttackStop;
+    public float maxRayDistance = 10f; // 사정거리
+
+    private GameObject scanObject;
+    private Vector3 mousePosition;
+    private Vector2 mouseDirection;
+    private RaycastHit2D attackHit;
+    private float rayDistance;
 
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
+        BulletManagement = GetComponent<BulletManagement>();
     }
 
     void Update()
@@ -44,13 +51,13 @@ public class PlayerAttack : MonoBehaviour
     //공격 스캔
     private void HitCastScan()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
-        Vector2 direction = (mousePosition - transform.position).normalized;
+        mouseDirection = (mousePosition - transform.position).normalized;
 
-        RaycastHit2D attackHit = Physics2D.Raycast(transform.position, direction, maxRayDistance, LayerMask.GetMask("Object"));
+        attackHit = Physics2D.Raycast(transform.position, mouseDirection, maxRayDistance, LayerMask.GetMask("Object"));
 
-        float rayDistance = maxRayDistance;
+        rayDistance = maxRayDistance;
 
         if (attackHit.collider != null)
         {
@@ -65,51 +72,67 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        Debug.DrawRay(transform.position, direction * rayDistance, Color.red);
+        WeaponAttack();
+    }
 
-        //리볼더
-        /*
-        if (Input.GetMouseButtonDown(0))
+    private void WeaponAttack()
+    {
+        Debug.DrawRay(transform.position, mouseDirection * rayDistance, Color.red);
+
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+
+        switch (attackType)
         {
-            playerController.anim.Play("Pistol");
-            StartCoroutine(ReloadTime());
-            if (scanObject != null)
-            {
-                Debug.Log("공격 물체 :" + attackHit.collider.name);
-                CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
-
-                //이펙트 발동
-                if (cameraShake != null)
+            case AttackType.None:
+                if (Input.GetMouseButtonDown(0))
                 {
+                    playerController.anim.Play("Pistol");
+                    StartCoroutine(ReloadTime());
 
-                    if(scanObject.CompareTag("Enemy"))
+                    if (scanObject != null) // 무언가를 맞출 시
                     {
-                        scanObject.GetComponent<MobBase>().TakeDamage(1);
+                        if (scanObject.CompareTag("Enemy"))
+                        {
+                            scanObject.GetComponent<MobBase>().TakeDamage(1);
+                        }
+
+                        cameraShake.Shake(0.2f, 0.1f);
+
+                        if (scanObject.CompareTag("Enemy"))
+                        {
+                            GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
+                            Destroy(hitEffect, 1f);
+                            CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                        }
+                        else
+                        {
+                            GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
+                            Destroy(hitEffect, 1f);
+                            CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                        }
                     }
-
-                    cameraShake.Shake(0.2f, 0.1f);
-
-                    if (scanObject.CompareTag("Enemy"))
+                    else // 허공 발사
                     {
-                        GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
-                        Destroy(hitEffect, 1f);
-                        CreateLineEffect(transform.position, direction, rayDistance);
-                    }
-                    else
-                    {
-                        GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
-                        Destroy(hitEffect, 1f);
-                        CreateLineEffect(transform.position, direction, rayDistance);
+                        CreateLineEffect(transform.position, mouseDirection, rayDistance);
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("바닥에 쏨");
-                CreateLineEffect(transform.position, direction, rayDistance);
-            }
+                break;
+
+            case AttackType.Pistol:
+                break;
+
+            case AttackType.ShotGun:
+                if (Input.GetMouseButton(0))
+                {
+
+                }
+                break;
+
+            case AttackType.Sniper:
+                break;
+
         }
-        */
+
         //라이플
         if (Input.GetMouseButton(0))
         {
@@ -118,7 +141,6 @@ public class PlayerAttack : MonoBehaviour
             if (scanObject != null)
             {
                 Debug.Log("공격 물체 :" + attackHit.collider.name);
-                CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
 
                 //이펙트 발동
                 if (cameraShake != null)
@@ -135,20 +157,20 @@ public class PlayerAttack : MonoBehaviour
                     {
                         GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                         Destroy(hitEffect, 1f);
-                        CreateLineEffect(transform.position, direction, rayDistance);
+                        CreateLineEffect(transform.position, mouseDirection, rayDistance);
                     }
                     else
                     {
                         GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
                         Destroy(hitEffect, 1f);
-                        CreateLineEffect(transform.position, direction, rayDistance);
+                        CreateLineEffect(transform.position, mouseDirection, rayDistance);
                     }
                 }
             }
             else
             {
                 Debug.Log("바닥에 쏨");
-                CreateLineEffect(transform.position, direction, rayDistance);
+                CreateLineEffect(transform.position, mouseDirection, rayDistance);
             }
         }
     }
