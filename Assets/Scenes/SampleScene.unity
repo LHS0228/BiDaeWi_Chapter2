@@ -1036,6 +1036,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 913981175}
     m_Modifications:
+    - target: {fileID: 1028352580386085444, guid: a476280a92f5680459e473b497606234, type: 3}
+      propertyPath: attackType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4357447997317651617, guid: a476280a92f5680459e473b497606234, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1276,9 +1280,9 @@ GameObject:
   m_Component:
   - component: {fileID: 913981175}
   - component: {fileID: 913981174}
-  - component: {fileID: 913981178}
   - component: {fileID: 913981177}
   - component: {fileID: 913981176}
+  - component: {fileID: 913981182}
   - component: {fileID: 913981179}
   - component: {fileID: 913981180}
   - component: {fileID: 913981181}
@@ -1429,36 +1433,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &913981178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913981173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d720637d00209594da5e23014c8f0a01, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &913981179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,15 +1449,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   anim: {fileID: 0}
   inputVec: {x: 0, y: 0}
-  onMove: 0
-  onJump: 0
   speed: 5
-  jumpPower: 15
-  lowJump: 5
-  highJump: 3
   isPlayerStop: 0
   isMoveStop: 0
-  isJumpStop: 0
 --- !u!95 &913981180
 Animator:
   serializedVersion: 5
@@ -1523,6 +1491,19 @@ MonoBehaviour:
     cooldownTime: 0
     currentHP: 0
     maxHP: 5
+--- !u!114 &913981182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913981173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba8cc705f9a1754693a00c45c9d343e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0
 --- !u!1 &1095262821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,9 +2126,9 @@ MonoBehaviour:
   gunEffectPrefab: {fileID: 8330202726654797266, guid: 73f4f137828c60944918d50d3df8a2f2, type: 3}
   hitEffectPrefab_Object: {fileID: 585896192489476814, guid: 1e68eb9c497723146a02a5fb7ece40bb, type: 3}
   hitEffectPrefab_Enemy: {fileID: 585896192489476814, guid: 145dbcbf88feee84a9c8fed08205ad75, type: 3}
-  maxRayDistance: 10
+  attackType: 1
   isAttackStop: 0
-  attackType: 0
+  maxRayDistance: 10
 --- !u!61 &2084471580
 BoxCollider2D:
   m_ObjectHideFlags: 0

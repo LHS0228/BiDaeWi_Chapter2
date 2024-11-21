@@ -9,6 +9,7 @@ public class BulletManagement : MonoBehaviour
 
     void GetWeapon(AttackType attackType, int maxBullet, int currentBullet)
     {
+        //attackType = attackType;
         this.currentBullet = currentBullet;
         this.maxBullet = maxBullet;
     }
