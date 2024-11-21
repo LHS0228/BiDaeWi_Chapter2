@@ -1333,7 +1333,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -1999653244, guid: 00d32faccf7c6f749b40eeb8a4a981b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1354,8 +1354,8 @@ Transform:
   m_GameObject: {fileID: 913981173}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.42, y: -1.02, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: -6.4309, y: -1.02, z: 0}
+  m_LocalScale: {x: 2.9780998, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2084471578}
@@ -1449,7 +1449,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   anim: {fileID: 0}
   inputVec: {x: 0, y: 0}
-  speed: 5
+  stamina: 100
   isPlayerStop: 0
   isMoveStop: 0
 --- !u!95 &913981180
@@ -1503,7 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba8cc705f9a1754693a00c45c9d343e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 5
 --- !u!1 &1095262821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2236,7 +2236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8414934836817034561, guid: de1ee7f6a949bc1469e09d3c4a2fd8bc, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

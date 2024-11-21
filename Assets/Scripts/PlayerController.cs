@@ -15,10 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 inputVec;
 
     [Header("플레이어 스테미너")]
-    [SerializeField] private float stamina;
-
-    [Header("플레이어 이동속도")]
-    [SerializeField] private float speed;
+    [SerializeField] private float stamina = 100;
 
     [HideInInspector] public bool isPlayerStop;
     [HideInInspector] public bool isMoveStop;
@@ -35,8 +32,13 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isPlayerStop)
+        {
             if (!isMoveStop)
+            {
                 OnMove();
+            }
+            OnHide();
+        }
         else
             anim.SetBool("isWalk", false);
 
@@ -58,5 +60,30 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("isWalk", true);
         else
             anim.SetBool("isWalk", false);
+    }
+
+    private void OnHide()
+    {
+        if(Input.GetKey(KeyCode.F))
+        {
+            StartCoroutine(StaminaCountrol(-1f, 0.2f));
+        }
+        else if(stamina < 100){
+            StartCoroutine(StaminaCountrol(1f, 0.2f));
+        }
+    }
+
+    IEnumerator StaminaCountrol(float count, float time)
+    {
+        if(count < 0 && stamina > 0)
+        {
+            stamina += count;
+        }
+        else if(count > 0 && stamina <= 100)
+        {
+            stamina += count;
+        }
+
+        yield return time;
     }
 }
