@@ -19,6 +19,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject gunEffectPrefab;
     [SerializeField] private GameObject hitEffectPrefab_Object;
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
+    [SerializeField] private GameObject reloadBar;
 
     private PlayerController playerController;
 
@@ -193,7 +194,7 @@ public class PlayerAttack : MonoBehaviour
         switch (weaponType)
         {
             case WeaponType.None:
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.2f);
                 break;
 
             case WeaponType.Pistol:
@@ -216,6 +217,16 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator ReloadTime()
     {
+        if (reloadBar.activeSelf)
+        {
+            reloadBar.GetComponent<Animator>().SetBool("isReload", true);
+        }
+        else
+        {
+            reloadBar.SetActive(true);
+            reloadBar.GetComponent<Animator>().SetBool("isReload", true);
+        }
+
         yield return new WaitForSeconds(2);
 
         if (currentBullet <= 0)
@@ -227,13 +238,19 @@ public class PlayerAttack : MonoBehaviour
                     currentBullet = maxBullet;
                     maxBullet = 0;
                 }
-                else
+                else if(maxBullet != 0)
                 {
                     currentBullet = loadBullet;
                     maxBullet -= loadBullet;
                 }
             }
-            Debug.Log("¸®·Îµù");
+            else
+            {
+                weaponType = WeaponType.None;
+                currentBullet = 1;
+            }
+
+            reloadBar.GetComponent<Animator>().SetBool("isReload", false);
         }
     }
 }
