@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class BulletManagement : MonoBehaviour
 {
-    public int currentBullet;
+    WeaponType weaponType;
     public int maxBullet;
+    public int loadBullet;
+    public int currentBullet;
 
-    void GetWeapon(AttackType attackType, int maxBullet, int currentBullet)
+    void GetWeapon(WeaponType weaponType, int maxBullet, int loadBullet,int currentBullet)
     {
-        //attackType = attackType;
-        this.currentBullet = currentBullet;
-        this.maxBullet = maxBullet;
+        weaponType = this.weaponType;
+        loadBullet = this.loadBullet;
+        currentBullet = this.currentBullet;
+        maxBullet = this.maxBullet;
     }
 }

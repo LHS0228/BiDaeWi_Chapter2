@@ -1037,7 +1037,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 913981175}
     m_Modifications:
     - target: {fileID: 1028352580386085444, guid: a476280a92f5680459e473b497606234, type: 3}
+      propertyPath: maxBullet
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1028352580386085444, guid: a476280a92f5680459e473b497606234, type: 3}
       propertyPath: attackType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1028352580386085444, guid: a476280a92f5680459e473b497606234, type: 3}
+      propertyPath: loadBullet
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1028352580386085444, guid: a476280a92f5680459e473b497606234, type: 3}
+      propertyPath: weaponType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4357447997317651617, guid: a476280a92f5680459e473b497606234, type: 3}
@@ -2126,9 +2138,12 @@ MonoBehaviour:
   gunEffectPrefab: {fileID: 8330202726654797266, guid: 73f4f137828c60944918d50d3df8a2f2, type: 3}
   hitEffectPrefab_Object: {fileID: 585896192489476814, guid: 1e68eb9c497723146a02a5fb7ece40bb, type: 3}
   hitEffectPrefab_Enemy: {fileID: 585896192489476814, guid: 145dbcbf88feee84a9c8fed08205ad75, type: 3}
-  attackType: 1
-  isAttackStop: 0
+  weaponType: 1
+  maxBullet: 30
+  loadBullet: 5
+  currentBullet: 0
   maxRayDistance: 10
+  isAttackStop: 0
 --- !u!61 &2084471580
 BoxCollider2D:
   m_ObjectHideFlags: 0

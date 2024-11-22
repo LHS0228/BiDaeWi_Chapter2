@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
-public enum AttackType
+public enum WeaponType
 {
     None, //근접 공격(기본) 
     Pistol,
@@ -21,13 +21,18 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
 
     private PlayerController playerController;
-    private BulletManagement BulletManagement;
 
     [Header("무기 세부 설정")]
-    public AttackType attackType;
-    public bool isAttackStop;
+    public WeaponType weaponType;
+    [SerializeField] private int maxBullet;
+    [SerializeField] private int loadBullet;
+    [SerializeField] private int currentBullet;
     public float maxRayDistance = 10f; // 사정거리
 
+    [Header("공격 가능 설정")]
+    public bool isAttackStop;
+
+    //기타 고정값
     private GameObject scanObject;
     private Vector3 mousePosition;
     private Vector2 mouseDirection;
@@ -37,7 +42,6 @@ public class PlayerAttack : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
-        BulletManagement = GetComponent<BulletManagement>();
     }
 
     void Update()
@@ -81,84 +85,83 @@ public class PlayerAttack : MonoBehaviour
 
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
 
-        switch (attackType)
+        if (currentBullet > 0)
         {
-            case AttackType.None:
-                break;
+            switch (weaponType)
+            {
+                case WeaponType.None:
+                    break;
 
-            case AttackType.Pistol:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    playerController.anim.Play("Pistol");
-                    StartCoroutine(ReloadTime());
-
-                    if (scanObject != null) // 무언가를 맞출 시
+                case WeaponType.Pistol:
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        if (scanObject.CompareTag("Enemy"))
+                        playerController.anim.Play("Pistol");
+                        StartCoroutine(DelayTime());
+
+                        if (scanObject != null) // 무언가를 맞출 시
                         {
-                            scanObject.GetComponent<MobBase>().TakeDamage(1);
+                            cameraShake.Shake(0.2f, 0.05f);
+
+                            if (scanObject.CompareTag("Enemy"))
+                            {
+                                scanObject.GetComponent<MobBase>().TakeDamage(1);
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                                CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                            }
+                            else
+                            {
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                                CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                            }
                         }
-
-                        cameraShake.Shake(0.2f, 0.05f);
-
-                        if (scanObject.CompareTag("Enemy"))
+                        else // 허공 발사
                         {
-                            GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
-                            Destroy(hitEffect, 1f);
                             CreateLineEffect(transform.position, mouseDirection, rayDistance);
                         }
-                        else
-                        {
-                            GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
-                            Destroy(hitEffect, 1f);
-                            CreateLineEffect(transform.position, mouseDirection, rayDistance);
-                        }
                     }
-                    else // 허공 발사
+                    break;
+
+                case WeaponType.ShotGun:
+                    break;
+
+                case WeaponType.Rifle:
+                    if (Input.GetMouseButton(0))
                     {
-                        CreateLineEffect(transform.position, mouseDirection, rayDistance);
-                    }
-                }
-                break;
+                        playerController.anim.Play("Pistol");
+                        StartCoroutine(ReloadTime());
 
-            case AttackType.ShotGun:
-                break;
-
-            case AttackType.Rifle:
-                if (Input.GetMouseButton(0))
-                {
-                    playerController.anim.Play("Pistol");
-                    StartCoroutine(ReloadTime());
-
-                    if (scanObject != null) // 무언가를 맞출 시
-                    {
-                        if (scanObject.CompareTag("Enemy"))
+                        if (scanObject != null) // 무언가를 맞출 시
                         {
-                            scanObject.GetComponent<MobBase>().TakeDamage(1);
+                            cameraShake.Shake(0.2f, 0.05f);
+
+                            if (scanObject.CompareTag("Enemy"))
+                            {
+                                scanObject.GetComponent<MobBase>().TakeDamage(1);
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                                CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                            }
+                            else
+                            {
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                                CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                            }
                         }
-
-                        cameraShake.Shake(0.2f, 0.05f);
-
-                        if (scanObject.CompareTag("Enemy"))
+                        else // 허공 발사
                         {
-                            GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
-                            Destroy(hitEffect, 1f);
-                            CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
-                        }
-                        else
-                        {
-                            GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
-                            Destroy(hitEffect, 1f);
                             CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                         }
                     }
-                    else // 허공 발사
-                    {
-                        CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
-                    }
-                }
-                break;
+                    break;
 
+            }
+        }
+        else
+        {
+            StartCoroutine(ReloadTime());
         }
     }
 
@@ -181,27 +184,27 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
-    IEnumerator ReloadTime()
+    IEnumerator DelayTime()
     {
         playerController.isMoveStop = true;
         isAttackStop = true;
-        
+        currentBullet -= 1;
 
-        switch (attackType)
+        switch (weaponType)
         {
-            case AttackType.None:
+            case WeaponType.None:
                 yield return new WaitForSeconds(0.5f);
                 break;
 
-            case AttackType.Pistol:
+            case WeaponType.Pistol:
                 yield return new WaitForSeconds(0.5f);
                 break;
 
-            case AttackType.ShotGun:
+            case WeaponType.ShotGun:
                 yield return new WaitForSeconds(0.5f);
                 break;
 
-            case AttackType.Rifle:
+            case WeaponType.Rifle:
                 yield return new WaitForSeconds(0.5f);
                 break;
         }
@@ -209,5 +212,29 @@ public class PlayerAttack : MonoBehaviour
 
         playerController.isMoveStop = false;
         isAttackStop = false;
+    }
+
+    IEnumerator ReloadTime()
+    {
+        yield return new WaitForSeconds(2);
+
+        if (currentBullet <= 0)
+        {
+            if (maxBullet > 0)
+            {
+                if (loadBullet > maxBullet)
+                {
+                    currentBullet = maxBullet;
+                    maxBullet = 0;
+                }
+                else
+                {
+                    currentBullet = loadBullet;
+                    maxBullet -= loadBullet;
+                }
+            }
+        }
+
+        Debug.Log("리로딩");
     }
 }
