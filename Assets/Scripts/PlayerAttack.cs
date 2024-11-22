@@ -97,6 +97,7 @@ public class PlayerAttack : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         playerController.anim.Play("Pistol");
+                        StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
 
                         if (scanObject != null) // 무언가를 맞출 시
@@ -131,6 +132,7 @@ public class PlayerAttack : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         playerController.anim.Play("Pistol");
+                        StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
 
                         if (scanObject != null) // 무언가를 맞출 시
@@ -187,7 +189,6 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator DelayTime()
     {
-        playerController.isMoveStop = true;
         isAttackStop = true;
         currentBullet -= 1;
 
@@ -210,9 +211,33 @@ public class PlayerAttack : MonoBehaviour
                 break;
         }
         
+        isAttackStop = false;
+    }
+
+    IEnumerator moveStopTime()
+    {
+        playerController.isMoveStop = true;
+
+        switch (weaponType)
+        {
+            case WeaponType.None:
+                yield return new WaitForSeconds(0f);
+                break;
+
+            case WeaponType.Pistol:
+                yield return new WaitForSeconds(0.5f);
+                break;
+
+            case WeaponType.ShotGun:
+                yield return new WaitForSeconds(2);
+                break;
+
+            case WeaponType.Rifle:
+                yield return new WaitForSeconds(1);
+                break;
+        }
 
         playerController.isMoveStop = false;
-        isAttackStop = false;
     }
 
     IEnumerator ReloadTime()
