@@ -24,15 +24,15 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("무기 세부 설정")]
     public WeaponType weaponType;
-    [SerializeField] private int maxBullet;
-    [SerializeField] private int loadBullet;
-    [SerializeField] private int currentBullet;
+    public int maxBullet;
+    public int loadBullet;
+    public int currentBullet = 1;
     public float maxRayDistance = 10f; // 사정거리
 
     [Header("공격 가능 설정")]
     public bool isAttackStop;
 
-    //기타 고정값
+    //기타 지역 변수값
     private GameObject scanObject;
     private Vector3 mousePosition;
     private Vector2 mouseDirection;
@@ -130,7 +130,7 @@ public class PlayerAttack : MonoBehaviour
                     if (Input.GetMouseButton(0))
                     {
                         playerController.anim.Play("Pistol");
-                        StartCoroutine(ReloadTime());
+                        StartCoroutine(DelayTime());
 
                         if (scanObject != null) // 무언가를 맞출 시
                         {
@@ -205,7 +205,7 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case WeaponType.Rifle:
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.05f);
                 break;
         }
         
@@ -233,8 +233,7 @@ public class PlayerAttack : MonoBehaviour
                     maxBullet -= loadBullet;
                 }
             }
+            Debug.Log("리로딩");
         }
-
-        Debug.Log("리로딩");
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletManagement : MonoBehaviour
 {
-    WeaponType weaponType;
+    public WeaponType weaponType;
     public int maxBullet;
     public int loadBullet;
     public int currentBullet;
@@ -15,5 +15,15 @@ public class BulletManagement : MonoBehaviour
         loadBullet = this.loadBullet;
         currentBullet = this.currentBullet;
         maxBullet = this.maxBullet;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.GetComponent<PlayerAttack>().weaponType = weaponType;
+        collision.GetComponent<PlayerAttack>().maxBullet = maxBullet;
+        collision.GetComponent<PlayerAttack>().loadBullet = loadBullet;
+        collision.GetComponent<PlayerAttack>().currentBullet = currentBullet;
+
+        Destroy(gameObject);
     }
 }
