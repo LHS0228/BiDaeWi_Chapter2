@@ -1980,7 +1980,7 @@ MonoBehaviour:
   hitEffectPrefab_Enemy: {fileID: 585896192489476814, guid: 145dbcbf88feee84a9c8fed08205ad75, type: 3}
   reloadBar: {fileID: 535174663}
   weaponType: 1
-  maxBullet: 55
+  maxBullet: 5555
   loadBullet: 3
   currentBullet: 1
   maxRayDistance: 10
@@ -2681,7 +2681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: 3
-  maxBullet: 30
+  maxBullet: 55555
   loadBullet: 5
   currentBullet: 5
 --- !u!1 &1978585780
