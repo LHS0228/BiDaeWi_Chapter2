@@ -108,13 +108,13 @@ public class PlayerAttack : MonoBehaviour
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection, rayDistance);
                             }
                             else
                             {
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(transform.position, mouseDirection, rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection, rayDistance);
                             }
                         }
                         else // 허공 발사
@@ -142,13 +142,13 @@ public class PlayerAttack : MonoBehaviour
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                             }
                             else
                             {
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                             }
                         }
                         else // 허공 발사
