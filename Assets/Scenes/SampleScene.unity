@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 535174665}
   - component: {fileID: 535174664}
   - component: {fileID: 535174666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Reloading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1291,6 +1291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackRange
       objectReference: {fileID: 0}
+    - target: {fileID: 6697066016716969481, guid: a476280a92f5680459e473b497606234, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     m_RemovedGameObjects: []
@@ -1391,7 +1395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 826126265}
   - component: {fileID: 826126266}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Reloading_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1743,7 +1747,7 @@ GameObject:
   - component: {fileID: 913981180}
   - component: {fileID: 913981181}
   - component: {fileID: 913981183}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2919,6 +2923,12 @@ MonoBehaviour:
   SpawnPoint: {fileID: 2008283904}
   attackTerm: 0.5
   target: {fileID: 913981175}
+  attackRange: 5
+  recognizeRange: 8
+  moveSpeed: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!95 &1993787828
 Animator:
   serializedVersion: 5
@@ -3026,7 +3036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2084471578}
   - component: {fileID: 2084471580}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3101,9 +3111,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 913981175}
     m_Modifications:
+    - target: {fileID: 3683871959240555803, guid: 86b46b86b812217458c69e5ac24dd421, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6965541367228482375, guid: 86b46b86b812217458c69e5ac24dd421, type: 3}
       propertyPath: m_Name
       value: Reloading
+      objectReference: {fileID: 0}
+    - target: {fileID: 6965541367228482375, guid: 86b46b86b812217458c69e5ac24dd421, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6965541367228482375, guid: 86b46b86b812217458c69e5ac24dd421, type: 3}
       propertyPath: m_IsActive
