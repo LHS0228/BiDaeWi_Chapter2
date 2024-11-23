@@ -103,7 +103,7 @@ public class PlayerAttack : MonoBehaviour
                         knifeEffect.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
                         Destroy(knifeEffect, 1f);
 
-                        Collider2D hit = Physics2D.OverlapBox((Vector2)knifeDistance, new Vector2(1.5f, 2.5f), 0, LayerMask.GetMask("Object"));
+                        Collider2D hit = Physics2D.OverlapBox((Vector2)knifeDistance, new Vector2(2, 2.5f), 0, LayerMask.GetMask("Object"));
 
                         if (hit != null) // 무언가를 맞출 시
                         {
@@ -318,7 +318,7 @@ public class PlayerAttack : MonoBehaviour
         {
             knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(knifeDistance, new Vector3(1.5f, 2.5f));
+            Gizmos.DrawWireCube(knifeDistance, new Vector3(2, 2.5f));
         }
     }
 }
