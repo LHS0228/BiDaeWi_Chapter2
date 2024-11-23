@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         if (x < 0)
             spriteRenderer.flipX = true;
-        else
+        else if( x > 0)
             spriteRenderer.flipX = false;
 
         if (x > 0 || x < 0)

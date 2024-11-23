@@ -38,9 +38,12 @@ public class NextStageDoor : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        guideText.SetActive(true);
-        playerController.isPlayerStop = true;
-        isChice = true;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            guideText.SetActive(true);
+            playerController.isPlayerStop = true;
+            isChice = true;
+        }
     }
 
     /*

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.UI.Image;
 
 public enum WeaponType
@@ -17,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private GameObject attackRange;
     [SerializeField] private GameObject gunEffectPrefab;
+    [SerializeField] private GameObject knifeEffectPrefab;
     [SerializeField] private GameObject hitEffectPrefab_Object;
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
     [SerializeField] private GameObject reloadBar;
@@ -39,6 +41,7 @@ public class PlayerAttack : MonoBehaviour
     private Vector2 mouseDirection;
     private RaycastHit2D attackHit;
     private float rayDistance;
+    private Vector3 knifeDistance;
 
     private void Awake()
     {
@@ -91,6 +94,34 @@ public class PlayerAttack : MonoBehaviour
             switch (weaponType)
             {
                 case WeaponType.None:
+                    if(Input.GetMouseButtonDown(0))
+                    {
+                        playerController.anim.Play("Knife");
+                        StartCoroutine(moveStopTime());
+                        StartCoroutine(DelayTime());
+                        GameObject knifeEffect = Instantiate(knifeEffectPrefab, knifeDistance, Quaternion.identity);
+                        knifeEffect.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
+                        Destroy(knifeEffect, 1f);
+
+                        Collider2D hit = Physics2D.OverlapBox((Vector2)knifeDistance, new Vector2(1.5f, 2.5f), 0, LayerMask.GetMask("Object"));
+
+                        if (hit != null) // 무언가를 맞출 시
+                        {
+                            cameraShake.Shake(0.2f, 0.05f);
+
+                            if (hit.CompareTag("Enemy"))
+                            {
+                                hit.gameObject.GetComponent<MobBase>().TakeDamage(1);
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, hit.gameObject.transform.position, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                            }
+                            else
+                            {
+                                GameObject hitEffect = Instantiate(hitEffectPrefab_Object, hit.gameObject.transform.position, Quaternion.identity);
+                                Destroy(hitEffect, 1f);
+                            }
+                        }
+                    }
                     break;
 
                 case WeaponType.Pistol:
@@ -190,7 +221,6 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator DelayTime()
     {
         isAttackStop = true;
-        currentBullet -= 1;
 
         switch (weaponType)
         {
@@ -199,14 +229,17 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case WeaponType.Pistol:
+                currentBullet -= 1;
                 yield return new WaitForSeconds(0.5f);
                 break;
 
             case WeaponType.ShotGun:
+                currentBullet -= 1;
                 yield return new WaitForSeconds(0.5f);
                 break;
 
             case WeaponType.Rifle:
+                currentBullet -= 1;
                 yield return new WaitForSeconds(0.05f);
                 break;
         }
@@ -221,7 +254,7 @@ public class PlayerAttack : MonoBehaviour
         switch (weaponType)
         {
             case WeaponType.None:
-                yield return new WaitForSeconds(0f);
+                yield return new WaitForSeconds(0.1f);
                 break;
 
             case WeaponType.Pistol:
@@ -276,6 +309,16 @@ public class PlayerAttack : MonoBehaviour
             }
 
             reloadBar.GetComponent<Animator>().SetBool("isReload", false);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (weaponType == WeaponType.None)
+        {
+            knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(knifeDistance, new Vector3(1.5f, 2.5f));
         }
     }
 }

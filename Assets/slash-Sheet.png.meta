@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf9fba465c739fd47a6966c4fa856247
+guid: 93d6850255527b0468e9cce8eada3d39
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2015b2940e474d4aaa1f28d91261514
-      internalID: 993046169
+      spriteID: 74240605f163e7a4b8dcc2b00fc3e2ca
+      internalID: 196307395
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 992e4aa7b2a931d4ca70653166e80d3a
-      internalID: 1252590484
+      spriteID: 4cd4e91d4f5543b47afebeb1d00084ad
+      internalID: 2084983030
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f6f1ddcf7b281342a907d8176c5d4f6
-      internalID: -1909727361
+      spriteID: 7a6a5d8681589fc48b4ecfcd3462c75b
+      internalID: -732102800
       vertices: []
       indices: 
       edges: []
@@ -187,29 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1efeccfdef0b02f439bbfd98e13cbef6
-      internalID: -538016886
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slash-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1e699f1d19615b84aaa2d44ecc02c6b0
-      internalID: 2129011298
+      spriteID: e42da6e8f1e742143bfe72a888917cfa
+      internalID: -1445785818
       vertices: []
       indices: 
       edges: []
@@ -225,11 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      slash-Sheet_0: 993046169
-      slash-Sheet_1: 1252590484
-      slash-Sheet_2: -1909727361
-      slash-Sheet_3: -538016886
-      slash-Sheet_4: 2129011298
+      slash-Sheet_0: 196307395
+      slash-Sheet_1: 2084983030
+      slash-Sheet_2: -732102800
+      slash-Sheet_3: -1445785818
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
