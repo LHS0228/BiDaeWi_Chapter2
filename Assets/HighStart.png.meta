@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 979e2097ab7eacb48bf68dc100ea3bde
+guid: d86a6e7af9388274bad5b9260de0d038
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 80
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,85 +110,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Hide_0
+      name: HighStart_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 64
         height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 885bfacbbd5985949bf436757ab2fb2d
-      internalID: 1761209457
+      spriteID: 249d3f1382fbd3a4b98b732021cfa01a
+      internalID: 1719117199
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Hide_1
+      name: HighStart_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
         height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20cabdd0f4b3d184983a227e83e04d55
-      internalID: -20381120
+      spriteID: 6cc5c050a1819204eb87bea93a087f67
+      internalID: -1644594479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Hide_2
+      name: HighStart_2
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 64
         height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d43734330aa867a469167f86bfe5389a
-      internalID: 1231562428
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Hide_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 9
-      pivot: {x: 0.5, y: 0.7}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 18948773d182aa84b9e1020845ca4611
-      internalID: -1571728613
+      spriteID: 218c02984e7917646a03bda1f2643d6c
+      internalID: -1695405057
       vertices: []
       indices: 
       edges: []
@@ -204,10 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Hide_0: 1761209457
-      Player_Hide_1: -20381120
-      Player_Hide_2: 1231562428
-      Player_Hide_3: -1571728613
+      HighStart_0: 1719117199
+      HighStart_1: -1644594479
+      HighStart_2: -1695405057
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,6 +15,11 @@ public class EntityBase : MonoBehaviour
         stats.currentHP = stats.maxHP;
     }
 
+    public float GetHp()
+    {
+        return stats.currentHP;
+    }
+
     public void TakeDamage(float damage)
     {
         if(IsDead) return;

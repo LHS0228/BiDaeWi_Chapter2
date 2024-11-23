@@ -99,6 +99,7 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Knife");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
+                        knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
                         GameObject knifeEffect = Instantiate(knifeEffectPrefab, knifeDistance, Quaternion.identity);
                         knifeEffect.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
                         Destroy(knifeEffect, 1f);
