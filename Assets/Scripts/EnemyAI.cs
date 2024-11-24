@@ -24,18 +24,20 @@ public class EnemyAI : MonoBehaviour
     private float moveSpeed = 2f;
 
     private Animator animator; // 애니 관련
-
+    private EntityBase entity;
     private float lastAttackTime = 0f; // 공격 텀에 사용됨
 
     [SerializeField]
     private LayerMask layerMask;
     private void Awake()
     {
+        entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
     }
     private void Update()
     {
         UpdateTarget();
+        CheckHp();
     }
 
     public void Setup(Transform target)
@@ -51,7 +53,6 @@ public class EnemyAI : MonoBehaviour
         {
             if (distance <= recognizeRange)
             {
-                Debug.Log($"인식1 {target}");
                 RecognizeTarget();
             }
         }
@@ -62,7 +63,6 @@ public class EnemyAI : MonoBehaviour
         {
             if (distance <= attackRange)
             {
-                Debug.Log($"인식 {target}");
                 if (Time.time - lastAttackTime >= attackTerm)
                 {
                     AttackTarget();
@@ -98,5 +98,11 @@ public class EnemyAI : MonoBehaviour
         clone.GetComponent<Projectile>().Setup(target.position);
     }
 
-
+    private void CheckHp()
+    {
+        if (entity.Stats.currentHP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
