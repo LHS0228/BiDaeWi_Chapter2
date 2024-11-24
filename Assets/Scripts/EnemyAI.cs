@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     private Animator animator; // 애니 관련
     private EntityBase entity;
     private float lastAttackTime = 0f; // 공격 텀에 사용됨
+    private bool isDead = false;
 
     [SerializeField]
     private LayerMask layerMask;
@@ -63,7 +64,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (distance <= attackRange)
             {
-                if (Time.time - lastAttackTime >= attackTerm)
+                if (Time.time - lastAttackTime >= attackTerm && isDead == false)
                 {
                     AttackTarget();
                 }
@@ -102,7 +103,21 @@ public class EnemyAI : MonoBehaviour
     {
         if (entity.Stats.currentHP <= 0)
         {
-            Destroy(gameObject);
+            isDead = true;
+            animator.SetBool("isDead", true);
+
+            StartCoroutine(DieAnimation());
         }
+    }
+
+    private IEnumerator DieAnimation()
+    {
+
+        animator.Play("Enemy_Die");
+
+        yield return new WaitForSeconds(2f);
+
+        Destroy(gameObject);
+
     }
 }
