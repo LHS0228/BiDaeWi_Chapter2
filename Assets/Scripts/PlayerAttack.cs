@@ -19,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject attackRange;
     [SerializeField] private GameObject gunEffectPrefab;
     [SerializeField] private GameObject knifeEffectPrefab;
+    [SerializeField] private GameObject shotGunEffectPrefab;
+
     [SerializeField] private GameObject hitEffectPrefab_Object;
     [SerializeField] private GameObject hitEffectPrefab_Enemy;
     [SerializeField] private GameObject reloadBar;
@@ -158,6 +160,12 @@ public class PlayerAttack : MonoBehaviour
                     break;
 
                 case WeaponType.ShotGun:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        StartCoroutine(moveStopTime());
+                        StartCoroutine(DelayTime());
+                        Instantiate(shotGunEffectPrefab, attackRange.transform.position + new Vector3(2, 0, 0), Quaternion.identity);
+                    }
                     break;
 
                 case WeaponType.Rifle:
@@ -320,6 +328,13 @@ public class PlayerAttack : MonoBehaviour
             knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(knifeDistance, new Vector3(2, 2.5f));
+        }
+
+        if (weaponType == WeaponType.ShotGun)
+        {
+            knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(knifeDistance + new Vector3(2f, 0, 0), new Vector3(5.25f, 2.5f));
         }
     }
 }
