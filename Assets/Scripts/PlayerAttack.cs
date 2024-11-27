@@ -44,6 +44,7 @@ public class PlayerAttack : MonoBehaviour
     private RaycastHit2D attackHit;
     private float rayDistance;
     private Vector3 knifeDistance;
+    private Vector3 shotGunDistance;
 
     private void Awake()
     {
@@ -101,6 +102,7 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Knife");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
+                        AttackTurn();
                         knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
                         GameObject knifeEffect = Instantiate(knifeEffectPrefab, knifeDistance, Quaternion.identity);
                         knifeEffect.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
@@ -130,6 +132,7 @@ public class PlayerAttack : MonoBehaviour
                 case WeaponType.Pistol:
                     if (Input.GetMouseButtonDown(0))
                     {
+                        AttackTurn();
                         playerController.anim.Play("Pistol");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
@@ -162,15 +165,43 @@ public class PlayerAttack : MonoBehaviour
                 case WeaponType.ShotGun:
                     if (Input.GetMouseButtonDown(0))
                     {
+                        AttackTurn();
+                        playerController.anim.Play("ShotGun");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
-                        Instantiate(shotGunEffectPrefab, attackRange.transform.position + new Vector3(2, 0, 0), Quaternion.identity);
+
+                        shotGunDistance = (Vector2)transform.position + new Vector2(3 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
+                        GameObject ShotEffect = Instantiate(shotGunEffectPrefab, shotGunDistance, Quaternion.identity);
+                        ShotEffect.GetComponentInChildren<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
+
+                        Collider2D[] hit = Physics2D.OverlapBoxAll((Vector2)shotGunDistance, new Vector2(5.25f, 2.5f), 0, LayerMask.GetMask("Object"));
+
+                        if (hit != null) // 무언가를 맞출 시
+                        {
+                            cameraShake.Shake(0.2f, 0.05f);
+
+                            for (int i = 0; i < hit.Length; i++)
+                            {
+                                if (hit[i].CompareTag("Enemy"))
+                                {
+                                    hit[i].gameObject.GetComponent<MobBase>().TakeDamage(1); // 데미지 입히기
+                                    GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, hit[i].gameObject.transform.position, Quaternion.identity);
+                                    Destroy(hitEffect, 1f);
+                                }
+                                else
+                                {
+                                    GameObject hitEffect = Instantiate(hitEffectPrefab_Object, hit[i].gameObject.transform.position, Quaternion.identity);
+                                    Destroy(hitEffect, 1f);
+                                }
+                            }
+                        }
                     }
                     break;
 
                 case WeaponType.Rifle:
                     if (Input.GetMouseButton(0))
                     {
+                        AttackTurn();
                         playerController.anim.Play("Pistol");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
@@ -184,18 +215,18 @@ public class PlayerAttack : MonoBehaviour
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(attackRange.transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection + new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                             }
                             else
                             {
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Object, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
-                                CreateLineEffect(attackRange.transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                                CreateLineEffect(attackRange.transform.position, mouseDirection + new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                             }
                         }
                         else // 허공 발사
                         {
-                            CreateLineEffect(transform.position, mouseDirection += new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
+                            CreateLineEffect(transform.position, mouseDirection + new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                         }
                     }
                     break;
@@ -205,6 +236,23 @@ public class PlayerAttack : MonoBehaviour
         else
         {
             StartCoroutine(ReloadTime());
+        }
+    }
+
+
+    private void AttackTurn()
+    {
+        if(mouseDirection.x <= Camera.main.ScreenToWorldPoint(transform.position).normalized.x)
+        {
+            Debug.Log("왼쪽");
+            playerController.spriteRenderer.flipX = true;
+            attackRange.transform.position = new Vector2(-1 * Mathf.Abs(attackRange.transform.position.x), attackRange.transform.position.y);
+        }
+        else
+        {
+            Debug.Log("오른쪽");
+            playerController.spriteRenderer.flipX = false;
+            attackRange.transform.position = new Vector2(Mathf.Abs(attackRange.transform.position.x), attackRange.transform.position.y);
         }
     }
 
@@ -258,6 +306,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator moveStopTime()
     {
+        playerController.anim.SetBool("isAttack", true);
         playerController.isMoveStop = true;
 
         switch (weaponType)
@@ -280,6 +329,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         playerController.isMoveStop = false;
+        playerController.anim.SetBool("isAttack", false);
     }
 
     IEnumerator ReloadTime()
@@ -332,9 +382,9 @@ public class PlayerAttack : MonoBehaviour
 
         if (weaponType == WeaponType.ShotGun)
         {
-            knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
+            shotGunDistance = (Vector2)transform.position + new Vector2(3 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(knifeDistance + new Vector3(2f, 0, 0), new Vector3(5.25f, 2.5f));
+            Gizmos.DrawWireCube(shotGunDistance, new Vector3(5.25f, 2.5f));
         }
     }
 }
