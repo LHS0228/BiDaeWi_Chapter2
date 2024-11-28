@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum EnemyState { None = -1, Idle = 0, Pursuit, Attack, Die, }
 
 public class EnemyAI : MonoBehaviour
 {
@@ -9,6 +13,8 @@ public class EnemyAI : MonoBehaviour
     private GameObject BulletPrefab; // ÃÑ¾Ë ÇÁ¸®ÆÕ
     [SerializeField]
     private Transform SpawnPoint; // ÃÑ¾Ë »ý¼º À§Ä¡
+    [SerializeField]
+    private GameObject[] GunObjectPrefab;
 
     [Header("°ø°Ý ¼³Á¤")]
     [SerializeField]
@@ -27,51 +33,79 @@ public class EnemyAI : MonoBehaviour
     private EntityBase entity;
     private float lastAttackTime = 0f; // °ø°Ý ÅÒ¿¡ »ç¿ëµÊ
     private bool isDead = false;
+    private bool isSpawn = false;
 
     [SerializeField]
     private LayerMask layerMask;
+    int typeIndex;
+    private EnemyState enemyState = EnemyState.None;
+
     private void Awake()
     {
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
-    }
-    private void Update()
-    {
-        UpdateTarget();
-        CheckHp();
+        typeIndex = (int)entity.Stats.mobType;
     }
 
+    private void OnEnable()
+    {
+        ChangeState(EnemyState.Idle);
+        StartCoroutine(UpdateTarget());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        enemyState = EnemyState.None;
+    }
+
+    private void Update()
+    {
+        Debug.Log($"{enemyState}");
+    }
     public void Setup(Transform target)
     {
         this.target = target;
     }
 
-    private void UpdateTarget()
+    private IEnumerator UpdateTarget()
     {
-        float distance = Vector2.Distance(transform.position, target.transform.position);
-        Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
-        if( collider1 != null && collider1.CompareTag("Player"))
+        while (true)
         {
-            if (distance <= recognizeRange)
-            {
-                RecognizeTarget();
-            }
-        }
+            float distance = Vector2.Distance(transform.position, target.transform.position);
 
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, attackRange, layerMask);
-
-        if (collider != null && collider.CompareTag("Player"))
-        {
-            if (distance <= attackRange)
+            Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
+            if (collider1 != null && collider1.CompareTag("Player"))
             {
-                if (Time.time - lastAttackTime >= attackTerm && isDead == false)
+                if (distance <= recognizeRange)
                 {
-                    AttackTarget();
+                    ChangeState(EnemyState.Pursuit);
+                }
+                else if (distance > recognizeRange)
+                {
+                    ChangeState(EnemyState.Idle);
                 }
             }
+
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, attackRange, layerMask);
+
+            if (collider != null && collider.CompareTag("Player"))
+            {
+                if (distance <= attackRange)
+                {
+                    if (Time.time - lastAttackTime >= attackTerm && isDead == false)
+                    {
+                        ChangeState(EnemyState.Attack);
+                    }
+                }
+                else if (distance > attackRange)
+                {
+                    ChangeState(EnemyState.Pursuit);
+                }
+            }
+
+            yield return new WaitForSeconds(0.2f);
         }
-
-
     }
 
     private void OnDrawGizmos()
@@ -99,20 +133,8 @@ public class EnemyAI : MonoBehaviour
         clone.GetComponent<Projectile>().Setup(target.position);
     }
 
-    private void CheckHp()
-    {
-        if (entity.Stats.currentHP <= 0)
-        {
-            isDead = true;
-            animator.SetBool("isDead", true);
-
-            StartCoroutine(DieAnimation());
-        }
-    }
-
     private IEnumerator DieAnimation()
     {
-
         animator.Play("Enemy_Die");
 
         yield return new WaitForSeconds(2f);
@@ -120,4 +142,97 @@ public class EnemyAI : MonoBehaviour
         Destroy(gameObject);
 
     }
+
+    private IEnumerator SpawnItem()
+    {
+        switch (typeIndex)
+        {
+            case 2:
+                GameObject gunpistol = Instantiate(GunObjectPrefab[0], transform.position, transform.rotation);
+                isSpawn = false;
+                break;
+            case 3:
+                GameObject gunrifle = Instantiate(GunObjectPrefab[1], transform.position, transform.rotation);
+                isSpawn = false;
+                break;
+        }
+
+        yield return null;
+    }
+
+    public void ChangeState(EnemyState state)
+    {
+        if (enemyState == state) return;
+
+        StopCoroutine(enemyState.ToString());
+
+        enemyState = state;
+
+        StartCoroutine(enemyState.ToString());
+    }
+
+    private IEnumerator Idle()
+    {
+        while (enemyState == EnemyState.Idle)
+        {
+            if (entity.Stats.currentHP <= 0)
+            {
+                ChangeState(EnemyState.Die);
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator Pursuit()
+    {
+        while (enemyState == EnemyState.Pursuit)
+        {
+            if (entity.Stats.currentHP <= 0)
+            {
+                ChangeState(EnemyState.Die);
+            }
+            else
+            {
+                RecognizeTarget();
+                yield return null;
+            }
+        }
+    }
+
+    private IEnumerator Attack()
+    {
+        while (enemyState == EnemyState.Attack)
+        {
+            if (entity.Stats.currentHP <= 0)
+            {
+                ChangeState(EnemyState.Die);
+            }
+            else if (Vector2.Distance(transform.position, target.transform.position) > attackRange)
+            {
+                ChangeState(EnemyState.Pursuit);
+            }
+            else
+            {
+                AttackTarget();
+                yield return new WaitForSeconds(attackTerm);
+            }
+        }
+
+    }
+
+    private IEnumerator Die()
+    {
+        if (isDead) yield break;
+        isDead = true;
+        if (!isSpawn)
+        {
+            isSpawn = true;
+            yield return StartCoroutine(SpawnItem());
+        }
+
+        animator.SetBool("isDead", true);
+
+        yield return StartCoroutine(DieAnimation());
+    }
+
 }
