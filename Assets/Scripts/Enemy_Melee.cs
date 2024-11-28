@@ -4,23 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum EnemyState { None = -1, Idle = 0, Pursuit, Attack, Die, }
+public enum Enemy_Melee_State { None = -1, Idle = 0, Pursuit, Attack, Die, }
 
-public class EnemyAI : MonoBehaviour
+public class Enemy_Melee : MonoBehaviour
 {
-    [Header("기타 설정")]
-    [SerializeField]
-    private GameObject BulletPrefab; // 총알 프리팹
-    [SerializeField]
-    private Transform SpawnPoint; // 총알 생성 위치
-    [SerializeField]
-    private GameObject[] GunObjectPrefab;
-
+    // isWalk , isDead, isAttack
     [Header("공격 설정")]
     [SerializeField]
     private float attackTerm = 0.5f; // 공격 텀
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private BoxCollider2D boxCollider;
 
     [SerializeField]
     private float attackRange = 5f;
@@ -42,9 +37,9 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
-        typeIndex = (int)entity.Stats.mobType;
     }
 
     private void OnEnable()
@@ -130,8 +125,6 @@ public class EnemyAI : MonoBehaviour
     private void AttackTarget()
     {
         lastAttackTime = Time.time;
-        GameObject clone = Instantiate(BulletPrefab, SpawnPoint.position, SpawnPoint.rotation);
-        clone.GetComponent<Projectile>().Setup(target.position);
     }
 
     private IEnumerator DieAnimation()
@@ -142,23 +135,6 @@ public class EnemyAI : MonoBehaviour
 
         Destroy(gameObject);
 
-    }
-
-    private IEnumerator SpawnItem()
-    {
-        switch (typeIndex)
-        {
-            case 2:
-                GameObject gunpistol = Instantiate(GunObjectPrefab[0], transform.position, transform.rotation);
-                isSpawn = false;
-                break;
-            case 3:
-                GameObject gunrifle = Instantiate(GunObjectPrefab[1], transform.position, transform.rotation);
-                isSpawn = false;
-                break;
-        }
-
-        yield return null;
     }
 
     public void ChangeState(EnemyState state)
@@ -181,7 +157,7 @@ public class EnemyAI : MonoBehaviour
                 ChangeState(EnemyState.Die);
             }
             animator.SetBool("isWalk", false);
-            animator.Play("Enemy_Idle");
+            animator.Play("Enemy_Melee_Idle");
             yield return null;
         }
     }
@@ -197,7 +173,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 RecognizeTarget();
-                animator.Play("Enemy_Walk");
+                animator.Play("Enemy_Melee_Walk");
                 yield return null;
             }
         }
@@ -232,7 +208,7 @@ public class EnemyAI : MonoBehaviour
         if (!isSpawn)
         {
             isSpawn = true;
-            yield return StartCoroutine(SpawnItem());
+            yield return null;
         }
 
         animator.SetBool("isDead", true);
@@ -240,4 +216,21 @@ public class EnemyAI : MonoBehaviour
         yield return StartCoroutine(DieAnimation());
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision != null && collision.CompareTag("Player"))
+        {
+            StartCoroutine(AttackAnim());
+        }
+    }
+
+    private IEnumerator AttackAnim()
+    {
+        animator.SetTrigger("isAttack");
+
+        animator.Play("Enemy_Melee_Attack");
+        // takedamage 관련 - 상대에게 데미지를 주는 코드
+
+        yield return new WaitForSeconds(attackTerm);
+    }
 }

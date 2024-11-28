@@ -20,7 +20,7 @@ public class MobBase : EntityBase
                 }
                 else
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    //gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
                 }
                 break;
         }
