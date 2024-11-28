@@ -157,7 +157,7 @@ public class Enemy_Melee : MonoBehaviour
                 ChangeState(EnemyState.Die);
             }
             animator.SetBool("isWalk", false);
-            animator.Play("Enemy_Idle");
+            animator.Play("Enemy_Melee_Idle");
             yield return null;
         }
     }
@@ -173,7 +173,7 @@ public class Enemy_Melee : MonoBehaviour
             else
             {
                 RecognizeTarget();
-                animator.Play("Enemy_Walk");
+                animator.Play("Enemy_Melee_Walk");
                 yield return null;
             }
         }
@@ -220,7 +220,17 @@ public class Enemy_Melee : MonoBehaviour
     {
         if (collision != null && collision.CompareTag("Player"))
         {
-
+            StartCoroutine(AttackAnim());
         }
+    }
+
+    private IEnumerator AttackAnim()
+    {
+        animator.SetTrigger("isAttack");
+
+        animator.Play("Enemy_Melee_Attack");
+        // takedamage 관련 - 상대에게 데미지를 주는 코드
+
+        yield return new WaitForSeconds(attackTerm);
     }
 }
