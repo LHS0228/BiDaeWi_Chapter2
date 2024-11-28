@@ -215,6 +215,7 @@ public class PlayerAttack : MonoBehaviour
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
+
                                 CreateLineEffect(attackRange.transform.position, mouseDirection + new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                             }
                             else
@@ -242,17 +243,21 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackTurn()
     {
-        if(mouseDirection.x <= Camera.main.ScreenToWorldPoint(transform.position).normalized.x)
+        if (mouseDirection.x <= Camera.main.ScreenToWorldPoint(transform.position).normalized.x)
         {
             Debug.Log("왼쪽");
             playerController.spriteRenderer.flipX = true;
-            attackRange.transform.position = new Vector2(-1 * Mathf.Abs(attackRange.transform.position.x), attackRange.transform.position.y);
+
+            // 캐릭터의 위치를 기준으로 `attackRange` 위치를 설정
+            attackRange.transform.position = transform.position + new Vector3(-1, 0, 0);
         }
         else
         {
             Debug.Log("오른쪽");
             playerController.spriteRenderer.flipX = false;
-            attackRange.transform.position = new Vector2(Mathf.Abs(attackRange.transform.position.x), attackRange.transform.position.y);
+
+            // 캐릭터의 위치를 기준으로 `attackRange` 위치를 설정
+            attackRange.transform.position = transform.position + new Vector3(1, 0, 0);
         }
     }
 
@@ -373,7 +378,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (weaponType == WeaponType.None)
+        if (weaponType == WeaponType.None)  
         {
             knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
             Gizmos.color = Color.green;
