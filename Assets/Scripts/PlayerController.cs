@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Vector2 inputVec;
 
+    public bool isHighGratify;
+    public bool isHide;
+
     [Header("플레이어 스테미너")]
     [SerializeField] private float stamina = 100;
 
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnHide()
     {
-        if(Input.GetKey(KeyCode.F))
+        if(Input.GetKey(KeyCode.F) && isHighGratify && stamina > 0)
         {
             anim.SetBool("isHide", true);
             anim.Play("HideStart");
@@ -76,7 +79,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(StaminaCountrol(1f, 0.2f));
         }
 
-        if (Input.GetKeyUp(KeyCode.F))
+        if (Input.GetKeyUp(KeyCode.F) || !isHighGratify || stamina < 1)
         {
             anim.SetBool("isHide", false);
         }
