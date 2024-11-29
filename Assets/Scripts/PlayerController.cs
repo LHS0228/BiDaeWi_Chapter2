@@ -20,11 +20,12 @@ public class PlayerController : MonoBehaviour
     public bool isHighGratify;
     public bool isHide;
 
+    [Header("플레이어 정지")]
+    public bool isPlayerStop;
+    public bool isMoveStop;
+
     [Header("플레이어 스테미너")]
     [SerializeField] private float stamina = 100;
-    [HideInInspector] public bool isPlayerStop;
-    [HideInInspector] public bool isMoveStop;
-
     private bool isStaminaSystem;
 
 

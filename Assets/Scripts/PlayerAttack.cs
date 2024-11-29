@@ -46,6 +46,9 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 knifeDistance;
     private Vector3 shotGunDistance;
 
+    private bool isRifleAttacking; //라이플 관련
+    private Coroutine rifleCoroutine;
+
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
@@ -97,7 +100,7 @@ public class PlayerAttack : MonoBehaviour
             switch (weaponType)
             {
                 case WeaponType.None:
-                    if(Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
                         playerController.anim.Play("Knife");
                         StartCoroutine(moveStopTime());
@@ -199,11 +202,13 @@ public class PlayerAttack : MonoBehaviour
                     break;
 
                 case WeaponType.Rifle:
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButton(0) && !Input.GetMouseButtonUp(0))
                     {
+                        isRifleAttacking = true;
+                        playerController.isMoveStop = true;
+
                         AttackTurn();
-                        playerController.anim.Play("Pistol");
-                        StartCoroutine(moveStopTime());
+                        playerController.anim.Play("Rifle");
                         StartCoroutine(DelayTime());
 
                         if (scanObject != null) // 무언가를 맞출 시
@@ -230,8 +235,22 @@ public class PlayerAttack : MonoBehaviour
                             CreateLineEffect(transform.position, mouseDirection + new Vector2(0, Random.Range(-0.1f, 0.1f)), rayDistance);
                         }
                     }
-                    break;
 
+                    if(isRifleAttacking)
+                    {
+                        if (rifleCoroutine != null)
+                        {
+                            StopCoroutine(rifleCoroutine);
+                            rifleCoroutine = StartCoroutine(moveStopTime());
+                            isRifleAttacking = false;
+                        }
+                        else
+                        {
+                            rifleCoroutine = StartCoroutine(moveStopTime());
+                            isRifleAttacking = false;
+                        }
+                    }
+                    break;
             }
         }
         else
@@ -317,6 +336,7 @@ public class PlayerAttack : MonoBehaviour
         switch (weaponType)
         {
             case WeaponType.None:
+
                 yield return new WaitForSeconds(0.1f);
                 break;
 
@@ -331,6 +351,7 @@ public class PlayerAttack : MonoBehaviour
             case WeaponType.Rifle:
                 yield return new WaitForSeconds(1);
                 break;
+                
         }
 
         playerController.isMoveStop = false;
