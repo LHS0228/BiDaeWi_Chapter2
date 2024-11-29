@@ -29,7 +29,8 @@ public class Enemy_Melee : MonoBehaviour
     private float lastAttackTime = 0f; // 공격 텀에 사용됨
     private bool isDead = false;
     private bool isSpawn = false;
-
+    private bool isAttack = false;
+    // Enemy_Melee_Walk, Enemy_Melee_Attack
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
@@ -208,7 +209,6 @@ public class Enemy_Melee : MonoBehaviour
         if (!isSpawn)
         {
             isSpawn = true;
-            yield return null;
         }
 
         animator.SetBool("isDead", true);
@@ -216,21 +216,31 @@ public class Enemy_Melee : MonoBehaviour
         yield return StartCoroutine(DieAnimation());
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision != null && collision.CompareTag("Player"))
+        if (collision != null && collision.CompareTag("Player") && !isAttack)
         {
-            StartCoroutine(AttackAnim());
+            StartCoroutine(AttackAnim(collision.GetComponent<EntityBase>()));
         }
     }
 
-    private IEnumerator AttackAnim()
+    private IEnumerator AttackAnim(EntityBase player)
     {
+        isAttack = true;
         animator.SetTrigger("isAttack");
 
         animator.Play("Enemy_Melee_Attack");
-        // takedamage 관련 - 상대에게 데미지를 주는 코드
 
-        yield return new WaitForSeconds(attackTerm);
+        yield return new WaitForSeconds(0.2f);
+
+        if (player != null) 
+        {
+            player.TakeDamage(1);
+        }
+
+        yield return new WaitForSeconds(attackTerm - 0.2f);
+
+        isAttack = false;
     }
+
 }
