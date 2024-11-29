@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,9 +22,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("플레이어 스테미너")]
     [SerializeField] private float stamina = 100;
-
     [HideInInspector] public bool isPlayerStop;
     [HideInInspector] public bool isMoveStop;
+
+    private bool isStaminaSystem;
 
 
     private void Awake()
@@ -34,6 +37,14 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        if (!isPlayerStop)
+        {
+            OnHide();
+        }
+    }
+
     private void FixedUpdate()
     {
         if (!isPlayerStop)
@@ -42,7 +53,6 @@ public class PlayerController : MonoBehaviour
             {
                 OnMove();
             }
-            OnHide();
         }
         else
             anim.SetBool("isWalk", false);
@@ -69,34 +79,53 @@ public class PlayerController : MonoBehaviour
 
     private void OnHide()
     {
-        if(Input.GetKey(KeyCode.F) && isHighGratify && stamina > 0)
+        if(Input.GetKeyDown(KeyCode.F) && isHighGratify && stamina > 0 && !gameObject.GetComponent<PlayerAttack>().isAttackStop)
         {
+            isHide = true;
             anim.SetBool("isHide", true);
-            anim.Play("HideStart");
-            StartCoroutine(StaminaCountrol(-1f, 0.2f));
-        }
-        else if(stamina < 100){
-            StartCoroutine(StaminaCountrol(1f, 0.2f));
+            isMoveStop = true;
+
+            if (!isStaminaSystem)
+            {
+                StartCoroutine(StaminaCountrol(-1f, 0.2f));
+            }
         }
 
-        if (Input.GetKeyUp(KeyCode.F) || !isHighGratify || stamina < 1)
+        else if(!isHide && stamina < 100)
         {
-            anim.SetBool("isHide", false);
+            isHide = false;
+            if (!isStaminaSystem)
+            {
+                StartCoroutine(StaminaCountrol(1f, 0.2f));
+            }
+        }
+
+        if (isHide)
+        {
+            if (Input.GetKeyUp(KeyCode.F) || Input.GetKey(KeyCode.F) && stamina < 1 || Input.GetKey(KeyCode.F) && gameObject.GetComponent<PlayerAttack>().isAttackStop)
+            {
+                isMoveStop = false; //버그
+                anim.SetBool("isHide", false);
+            }
         }
     }
 
-    IEnumerator StaminaCountrol(float count, float time)
+    private IEnumerator StaminaCountrol(float count, float time)
     {
-        if(count < 0 && stamina > 0)
+        isStaminaSystem = true;
+
+        if (count < 0 && stamina > 0)
         {
             stamina += count;
         }
-        else if(count > 0 && stamina <= 100)
+        else if (count > 0 && stamina <= 100)
         {
             stamina += count;
         }
 
-        yield return time;
+        yield return new WaitForSeconds(time);
+
+        isStaminaSystem = false;
     }
 
     private void OnDead()
