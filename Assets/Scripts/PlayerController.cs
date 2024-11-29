@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("플레이어 스테미너")]
     [SerializeField] private float stamina = 100;
-    private bool isStaminaSystem;
+    private Coroutine nowCoroutine;
 
 
     private void Awake()
@@ -80,24 +80,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnHide()
     {
-        if(Input.GetKeyDown(KeyCode.F) && isHighGratify && stamina > 0 && !gameObject.GetComponent<PlayerAttack>().isAttackStop)
+        if(Input.GetKey(KeyCode.F) && isHighGratify && stamina > 0 && !gameObject.GetComponent<PlayerAttack>().isAttackStop)
         {
             isHide = true;
             anim.SetBool("isHide", true);
             isMoveStop = true;
 
-            if (!isStaminaSystem)
+            if (nowCoroutine == null)
             {
-                StartCoroutine(StaminaCountrol(-1f, 0.2f));
+                nowCoroutine = StartCoroutine(StaminaCountrol(-1f, 0.2f));
             }
         }
 
         else if(!isHide && stamina < 100)
         {
             isHide = false;
-            if (!isStaminaSystem)
+            if (nowCoroutine == null)
             {
-                StartCoroutine(StaminaCountrol(1f, 0.2f));
+                nowCoroutine = StartCoroutine(StaminaCountrol(1f, 0.2f));
             }
         }
 
@@ -105,7 +105,8 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyUp(KeyCode.F) || Input.GetKey(KeyCode.F) && stamina < 1 || Input.GetKey(KeyCode.F) && gameObject.GetComponent<PlayerAttack>().isAttackStop)
             {
-                isMoveStop = false; //버그
+                isMoveStop = false;
+                isHide = false;
                 anim.SetBool("isHide", false);
             }
         }
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StaminaCountrol(float count, float time)
     {
-        isStaminaSystem = true;
+        yield return new WaitForSeconds(time);
 
         if (count < 0 && stamina > 0)
         {
@@ -124,9 +125,7 @@ public class PlayerController : MonoBehaviour
             stamina += count;
         }
 
-        yield return new WaitForSeconds(time);
-
-        isStaminaSystem = false;
+        nowCoroutine = null;
     }
 
     private void OnDead()
