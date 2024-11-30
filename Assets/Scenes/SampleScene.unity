@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Melee
       objectReference: {fileID: 0}
+    - target: {fileID: 8195582630896064678, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4544061747181884866, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
     m_RemovedGameObjects: []
@@ -1538,9 +1542,9 @@ MonoBehaviour:
   inputVec: {x: 0, y: 0}
   isHighGratify: 0
   isHide: 0
-  stamina: 100
   isPlayerStop: 0
   isMoveStop: 0
+  stamina: 100
 --- !u!95 &913981180
 Animator:
   serializedVersion: 5
@@ -2670,7 +2674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2534944137069872803, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2658495671078302037, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2711,6 +2715,14 @@ PrefabInstance:
     - target: {fileID: 2658495671078302037, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422455740441819058, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
+      propertyPath: stats.maxHP
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422455740441819058, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
+      propertyPath: stats.currentHP
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8033903152962332848, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
       propertyPath: target

@@ -39,12 +39,14 @@ public class EnemyAI : MonoBehaviour
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
+    private PlayerController player;
 
     private void Awake()
     {
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         typeIndex = (int)entity.Stats.mobType;
+        player = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -62,6 +64,7 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         Debug.Log($"{enemyState}");
+
     }
     public void Setup(Transform target)
     {
@@ -77,12 +80,13 @@ public class EnemyAI : MonoBehaviour
             Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
             if (collider1 != null && collider1.CompareTag("Player"))
             {
+                player = collider1.GetComponent<PlayerController>();
                 if (distance <= recognizeRange && distance > attackRange)
                 {
                     ChangeState(EnemyState.Pursuit);
                 }
             }
-            if (distance > recognizeRange)
+            if (distance > recognizeRange || player.isHighGratify == true)
             {
                 ChangeState(EnemyState.Idle);
             }
@@ -91,6 +95,7 @@ public class EnemyAI : MonoBehaviour
 
             if (collider != null && collider.CompareTag("Player"))
             {
+                player = collider.GetComponent<PlayerController>();
                 if (distance <= attackRange)
                 {
                     if (Time.time - lastAttackTime >= attackTerm && isDead == false)
@@ -119,7 +124,7 @@ public class EnemyAI : MonoBehaviour
     private void RecognizeTarget()
     {
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > attackRange && distance <= recognizeRange)
+        if (distance > attackRange && distance <= recognizeRange && player.isHighGratify == false)
         {
             Vector2 targetPosition = target.transform.position;
             Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
@@ -129,9 +134,17 @@ public class EnemyAI : MonoBehaviour
     }
     private void AttackTarget()
     {
-        lastAttackTime = Time.time;
-        GameObject clone = Instantiate(BulletPrefab, SpawnPoint.position, SpawnPoint.rotation);
-        clone.GetComponent<Projectile>().Setup(target.position);
+        if(player.isHighGratify == false)
+        {
+            lastAttackTime = Time.time;
+            GameObject clone = Instantiate(BulletPrefab, SpawnPoint.position, SpawnPoint.rotation);
+            clone.GetComponent<Projectile>().Setup(target.position);
+        }
+        else
+        {
+            ChangeState(EnemyState.Idle);
+        }
+        
     }
 
     private IEnumerator DieAnimation()
@@ -196,9 +209,17 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                RecognizeTarget();
-                animator.Play("Enemy_Walk");
-                yield return null;
+                if(!player.isHighGratify)
+                {
+                    RecognizeTarget();
+                    animator.Play("Enemy_Walk");
+                    yield return null;
+                }
+                else
+                {
+                    animator.Play("Enemy_Idle");
+                    yield return null;
+                }
             }
         }
     }
