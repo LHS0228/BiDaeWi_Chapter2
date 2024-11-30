@@ -25,9 +25,12 @@ public class PlayerController : MonoBehaviour
     public bool isMoveStop;
 
     [Header("플레이어 스테미너")]
+    [SerializeField] private GameObject staminaBar;
     [SerializeField] private float stamina = 100;
     private Coroutine nowCoroutine;
 
+    [SerializeField] private Vector3 barOriganlSize;
+    private Vector3 barOriganlTransform;
 
     private void Awake()
     {
@@ -36,6 +39,9 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        barOriganlSize = staminaBar.transform.localScale;
+        barOriganlTransform = staminaBar.transform.position;
     }
 
     private void Update()
@@ -48,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        StaminaBarUpdate();
         if (!isPlayerStop)
         {
             if (!isMoveStop)
@@ -110,6 +117,35 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("isHide", false);
             }
         }
+    }
+
+    private void StaminaBarUpdate()
+    {
+        if(stamina == 100)
+        {
+            if (staminaBar.activeSelf)
+            {
+                staminaBar.SetActive(false);
+            }
+        }
+        else
+        {
+            if (!staminaBar.activeSelf)
+            {
+                staminaBar.SetActive(true);
+            }
+        }
+        staminaBar.transform.localScale = new Vector3(barOriganlSize.x * (stamina/100), barOriganlSize.y, barOriganlSize.z);
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hiding"))
+        {
+            staminaBar.transform.position = new Vector2(staminaBar.transform.position.x, -0.2f);
+        }
+        else
+        {
+            staminaBar.transform.position = new Vector2(staminaBar.transform.position.x, barOriganlTransform.y);
+        }
+
     }
 
     private IEnumerator StaminaCountrol(float count, float time)

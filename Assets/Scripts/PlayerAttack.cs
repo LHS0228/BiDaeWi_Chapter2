@@ -139,11 +139,11 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Pistol");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
+                        cameraShake.Shake(0.2f, 0.05f);
+
 
                         if (scanObject != null) // 무언가를 맞출 시
                         {
-                            cameraShake.Shake(0.2f, 0.05f);
-
                             if (scanObject.CompareTag("Enemy"))
                             {
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
@@ -181,7 +181,7 @@ public class PlayerAttack : MonoBehaviour
 
                         if (hit != null) // 무언가를 맞출 시
                         {
-                            cameraShake.Shake(0.2f, 0.05f);
+                            cameraShake.Shake(0.2f, 0.2f);
 
                             for (int i = 0; i < hit.Length; i++)
                             {
@@ -211,10 +211,10 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Rifle");
                         StartCoroutine(DelayTime());
 
+                        cameraShake.Shake(0.2f, 0.05f);
+
                         if (scanObject != null) // 무언가를 맞출 시
                         {
-                            cameraShake.Shake(0.2f, 0.05f);
-
                             if (scanObject.CompareTag("Enemy"))
                             {
                                 scanObject.GetComponent<MobBase>().TakeDamage(1);
