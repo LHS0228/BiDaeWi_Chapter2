@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d68f14dfaeebb514884316f05cf6abb8
+guid: bebfd8d1dffc894499c21df4b4fd81e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_0
+      name: ENEMY_shield_run-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18b56e316171a164a8ac5a0b34591975
-      internalID: 311029650
+      spriteID: 7fc3845b5b97297498f8629d235d001d
+      internalID: -308449583
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_1
+      name: ENEMY_shield_run-Sheet_1
       rect:
         serializedVersion: 2
         x: 64
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c35e3c29973a0b845903a770456a201d
-      internalID: 1953006016
+      spriteID: d180bac088b2923418cdfd7252be2c72
+      internalID: 495493801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_2
+      name: ENEMY_shield_run-Sheet_2
       rect:
         serializedVersion: 2
         x: 128
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b84dedcf32344874891aa59bf51d9b92
-      internalID: -1878773877
+      spriteID: 74daf61366dc39b40bae569669192fd7
+      internalID: 563213891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_3
+      name: ENEMY_shield_run-Sheet_3
       rect:
         serializedVersion: 2
         x: 192
@@ -174,8 +174,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf0aad999f2896f46a5573ad9499c4ef
-      internalID: 2026560193
+      spriteID: b96f15fe9d67758428c4cf85eff1c514
+      internalID: 1258740514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENEMY_shield_run-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f68db82c17c86ea4f88f4b4acda93a5d
+      internalID: -1621333955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENEMY_shield_run-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1065f3597849954eb4442eb051b3a67
+      internalID: -1457457728
       vertices: []
       indices: 
       edges: []
@@ -191,10 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ENEMY_shotgun_die-Sheet_0: 311029650
-      ENEMY_shotgun_die-Sheet_1: 1953006016
-      ENEMY_shotgun_die-Sheet_2: -1878773877
-      ENEMY_shotgun_die-Sheet_3: 2026560193
+      ENEMY_shield_run-Sheet_0: -308449583
+      ENEMY_shield_run-Sheet_1: 495493801
+      ENEMY_shield_run-Sheet_2: 563213891
+      ENEMY_shield_run-Sheet_3: 1258740514
+      ENEMY_shield_run-Sheet_4: -1621333955
+      ENEMY_shield_run-Sheet_5: -1457457728
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
