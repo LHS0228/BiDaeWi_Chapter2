@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
+    private Vector3 orignalPosition;
+
+    private void Awake()
+    {
+        orignalPosition = transform.localPosition;
+    }
+
     private IEnumerator ShakeEffect(float durating, float magnitude)
     {
-        Vector3 orignalPosition = transform.localPosition;
         float elapsed = 0.0f;
 
         while(elapsed < durating)
@@ -27,5 +33,10 @@ public class CameraShake : MonoBehaviour
     public void Shake(float durating, float magnitude)
     {
         StartCoroutine(ShakeEffect(durating, magnitude));
+    }
+
+    public void CameraTransUpdate()
+    {
+        orignalPosition = transform.localPosition;
     }
 }
