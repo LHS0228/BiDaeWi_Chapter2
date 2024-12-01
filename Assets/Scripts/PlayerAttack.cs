@@ -334,8 +334,9 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator moveStopTime()
     {
-        playerController.anim.SetBool("isAttack", true);
         playerController.isMoveStop = true;
+        playerController.anim.SetBool("isWalk", false);
+        playerController.anim.SetBool("isAttack", true);
 
         switch (weaponType)
         {
