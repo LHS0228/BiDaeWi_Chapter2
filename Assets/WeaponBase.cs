@@ -21,7 +21,7 @@ public class WeaponBase : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKey(KeyCode.LeftControl) && collision.GetComponent<PlayerAttack>())
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             collision.GetComponent<PlayerAttack>().weaponType = weaponType;
             collision.GetComponent<PlayerAttack>().maxBullet = maxBullet;

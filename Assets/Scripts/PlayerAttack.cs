@@ -10,8 +10,8 @@ public enum WeaponType
 {
     None, //근접 공격(기본) 
     Pistol,
-    Rifle,
     ShotGun,
+    Rifle,
 }
 
 public class PlayerAttack : MonoBehaviour
@@ -48,7 +48,6 @@ public class PlayerAttack : MonoBehaviour
 
     private bool isRifleAttacking; //라이플 관련
     private Coroutine rifleCoroutine;
-    private Coroutine reloadCoroutine;
 
     private void Awake()
     {
@@ -140,7 +139,7 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Pistol");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
-                        cameraShake.Shake(0.2f, 0.075f);
+                        cameraShake.Shake(0.2f, 0.05f);
 
 
                         if (scanObject != null) // 무언가를 맞출 시
@@ -182,7 +181,7 @@ public class PlayerAttack : MonoBehaviour
 
                         if (hit != null) // 무언가를 맞출 시
                         {
-                            cameraShake.Shake(0.2f, 0.4f);
+                            cameraShake.Shake(0.2f, 0.2f);
 
                             for (int i = 0; i < hit.Length; i++)
                             {
@@ -212,7 +211,7 @@ public class PlayerAttack : MonoBehaviour
                         playerController.anim.Play("Rifle");
                         StartCoroutine(DelayTime());
 
-                        cameraShake.Shake(0.2f, 0.1f);
+                        cameraShake.Shake(0.2f, 0.05f);
 
                         if (scanObject != null) // 무언가를 맞출 시
                         {
@@ -256,10 +255,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            if (reloadCoroutine == null)
-            {
-                reloadCoroutine = StartCoroutine(ReloadTime());
-            }
+            StartCoroutine(ReloadTime());
         }
     }
 
@@ -399,8 +395,6 @@ public class PlayerAttack : MonoBehaviour
 
             reloadBar.GetComponent<Animator>().SetBool("isReload", false);
         }
-
-        reloadCoroutine = null;
     }
 
     private void OnDrawGizmos()
