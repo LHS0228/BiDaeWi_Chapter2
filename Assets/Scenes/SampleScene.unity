@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 352082435}
   - component: {fileID: 352082434}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: HP3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2564,7 +2564,7 @@ GameObject:
   - component: {fileID: 1096999625}
   - component: {fileID: 1096999624}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: HP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2732,10 +2732,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1113521804}
+  - {fileID: 1096999623}
   - {fileID: 352082433}
   - {fileID: 1519447757}
   - {fileID: 2091902872}
-  - {fileID: 1096999623}
   - {fileID: 974034324}
   m_Father: {fileID: 1456809781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2756,7 +2756,7 @@ GameObject:
   - component: {fileID: 1113521806}
   - component: {fileID: 1113521805}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: HP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3310,6 +3310,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348547973}
   m_CullTransparentMesh: 1
+--- !u!1 &1350174345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1350174347}
+  - component: {fileID: 1350174346}
+  m_Layer: 5
+  m_Name: HPSYSTEMUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1350174346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350174345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 683639ba0e29e0f458ced24a21d04f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBase: {fileID: 913981181}
+  orginHP: {fileID: 1291074553, guid: 58e191180356f8d428bebd48e86e7c7a, type: 3}
+  breakHP: {fileID: -813660518, guid: 58e191180356f8d428bebd48e86e7c7a, type: 3}
+  HPBar:
+  - {fileID: 1113521805}
+  - {fileID: 1096999624}
+  - {fileID: 352082434}
+  - {fileID: 1519447758}
+  - {fileID: 2091902873}
+--- !u!224 &1350174347
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350174345}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 960, y: 540}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1456809777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3426,7 +3483,7 @@ GameObject:
   - component: {fileID: 1519447759}
   - component: {fileID: 1519447758}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: HP4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4257,7 +4314,7 @@ GameObject:
   - component: {fileID: 2091902874}
   - component: {fileID: 2091902873}
   m_Layer: 5
-  m_Name: Image (5)
+  m_Name: HP5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4741,6 +4798,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1350174347}
   - {fileID: 1179347339}
   - {fileID: 1456809781}
   - {fileID: 619394802}
