@@ -5,7 +5,7 @@ public enum MobType
     Player,
     WalkMan,
     PistolMan,
-    SildeMan,
+    ShieldMan,
     SniperMan
 }
 

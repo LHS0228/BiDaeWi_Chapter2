@@ -4,23 +4,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum EnemyState { None = -1, Idle = 0, Pursuit, Attack, Die, }
+public enum Enemy_Shield_State { None = -1, Idle = 0, Pursuit, Attack, Die, }
 
-public class EnemyAI : MonoBehaviour
+public class Enemy_Shield : MonoBehaviour
 {
-    [Header("±âÅ¸ ¼³Á¤")]
-    [SerializeField]
-    private GameObject BulletPrefab; // ÃÑ¾Ë ÇÁ¸®ÆÕ
-    [SerializeField]
-    private Transform SpawnPoint; // ÃÑ¾Ë »ý¼º À§Ä¡
-    [SerializeField]
-    private GameObject[] GunObjectPrefab;
-
     [Header("°ø°Ý ¼³Á¤")]
     [SerializeField]
     private float attackTerm = 0.5f; // °ø°Ý ÅÒ
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private BoxCollider2D boxCollider;
 
     [SerializeField]
     private float attackRange = 5f;
@@ -34,19 +28,19 @@ public class EnemyAI : MonoBehaviour
     private float lastAttackTime = 0f; // °ø°Ý ÅÒ¿¡ »ç¿ëµÊ
     private bool isDead = false;
     private bool isSpawn = false;
+    private bool isAttack = false;
 
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
-    private PlayerController player;
+    private WeaponType weaponType;
 
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
-        typeIndex = (int)entity.Stats.mobType;
-        player = GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -64,6 +58,7 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         Debug.Log($"{enemyState}");
+        CheckPlayerGunType();
     }
     public void Setup(Transform target)
     {
@@ -79,13 +74,12 @@ public class EnemyAI : MonoBehaviour
             Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
             if (collider1 != null && collider1.CompareTag("Player"))
             {
-                player = collider1.GetComponent<PlayerController>();
                 if (distance <= recognizeRange && distance > attackRange)
                 {
                     ChangeState(EnemyState.Pursuit);
                 }
             }
-            if (distance > recognizeRange || player.isHighGratify == true)
+            if (distance > recognizeRange)
             {
                 ChangeState(EnemyState.Idle);
             }
@@ -94,7 +88,6 @@ public class EnemyAI : MonoBehaviour
 
             if (collider != null && collider.CompareTag("Player"))
             {
-                player = collider.GetComponent<PlayerController>();
                 if (distance <= attackRange)
                 {
                     if (Time.time - lastAttackTime >= attackTerm && isDead == false)
@@ -123,7 +116,7 @@ public class EnemyAI : MonoBehaviour
     private void RecognizeTarget()
     {
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > attackRange && distance <= recognizeRange && player.isHighGratify == false)
+        if (distance > attackRange && distance <= recognizeRange)
         {
             Vector2 targetPosition = target.transform.position;
             Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
@@ -133,16 +126,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void AttackTarget()
     {
-        if (player.isHighGratify == false)
-        {
-            lastAttackTime = Time.time;
-            GameObject clone = Instantiate(BulletPrefab, SpawnPoint.position, SpawnPoint.rotation);
-            clone.GetComponent<Projectile>().Setup(target.position);
-        }
-        else
-        {
-            ChangeState(EnemyState.Idle);
-        }
+        lastAttackTime = Time.time;
     }
 
     private IEnumerator DieAnimation()
@@ -153,23 +137,6 @@ public class EnemyAI : MonoBehaviour
 
         Destroy(gameObject);
 
-    }
-
-    private IEnumerator SpawnItem()
-    {
-        switch (typeIndex)
-        {
-            case 2:
-                GameObject gunpistol = Instantiate(GunObjectPrefab[0], transform.position, transform.rotation);
-                isSpawn = false;
-                break;
-            case 3:
-                GameObject gunrifle = Instantiate(GunObjectPrefab[1], transform.position, transform.rotation);
-                isSpawn = false;
-                break;
-        }
-
-        yield return null;
     }
 
     public void ChangeState(EnemyState state)
@@ -192,7 +159,7 @@ public class EnemyAI : MonoBehaviour
                 ChangeState(EnemyState.Die);
             }
             animator.SetBool("isWalk", false);
-            animator.Play("Enemy_Idle");
+            animator.Play("Enemy_Shield_Idle");
             yield return null;
         }
     }
@@ -207,17 +174,9 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                if (!player.isHighGratify)
-                {
-                    RecognizeTarget();
-                    animator.Play("Enemy_Walk");
-                    yield return null;
-                }
-                else
-                {
-                    animator.Play("Enemy_Idle");
-                    yield return null;
-                }
+                RecognizeTarget();
+                animator.Play("Enemy_Shield_Walk");
+                yield return null;
             }
         }
     }
@@ -251,7 +210,6 @@ public class EnemyAI : MonoBehaviour
         if (!isSpawn)
         {
             isSpawn = true;
-            yield return StartCoroutine(SpawnItem());
         }
 
         animator.SetBool("isDead", true);
@@ -259,4 +217,49 @@ public class EnemyAI : MonoBehaviour
         yield return StartCoroutine(DieAnimation());
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision != null && collision.CompareTag("Player") && !isAttack)
+        {
+            StartCoroutine(AttackAnim(collision.GetComponent<EntityBase>()));
+        }
+    }
+
+    private IEnumerator AttackAnim(EntityBase player)
+    {
+        isAttack = true;
+        animator.SetTrigger("isAttack");
+
+        animator.Play("Enemy_Shield_Walk");
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (player != null)
+        {
+            player.TakeDamage(1);
+        }
+
+        yield return new WaitForSeconds(attackTerm - 0.2f);
+
+        isAttack = false;
+    }
+
+    private void CheckPlayerGunType()
+    {
+        switch (weaponType)
+        {
+            case WeaponType.None:
+
+                break;
+            case WeaponType.Pistol:
+
+                break;
+            case WeaponType.Rifle:
+
+                break;
+            case WeaponType.ShotGun:
+
+                break;
+        }
+    }
 }
