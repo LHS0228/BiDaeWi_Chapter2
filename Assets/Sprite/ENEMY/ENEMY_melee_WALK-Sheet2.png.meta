@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d68f14dfaeebb514884316f05cf6abb8
+guid: f6f757fb7338ebc49815e25429153aa0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_0
+      name: ENEMY_melee_WALK-Sheet2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2e34fc185cedb4498e4c055672adc75
-      internalID: -776384206
+      spriteID: 6a83157c8eda21248b8f61f5871a20e5
+      internalID: 1650173062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_1
+      name: ENEMY_melee_WALK-Sheet2_1
       rect:
         serializedVersion: 2
         x: 64
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a901561945d1e0a46848554e776ddfcd
-      internalID: 1610452959
+      spriteID: 8f072f89ffead294bad0811461c7734f
+      internalID: 1283906758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_2
+      name: ENEMY_melee_WALK-Sheet2_2
       rect:
         serializedVersion: 2
         x: 128
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01a781936ee0c444d825ea61cd941d49
-      internalID: 395717067
+      spriteID: f470328b30469b742926168f0d741dc1
+      internalID: -992309446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ENEMY_shotgun_die-Sheet_3
+      name: ENEMY_melee_WALK-Sheet2_3
       rect:
         serializedVersion: 2
         x: 192
@@ -174,8 +174,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e8e0bac7cace344da921144806e3a69
-      internalID: 348392790
+      spriteID: 2287c982ed5144248a46556dc0496c1c
+      internalID: 705201024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENEMY_melee_WALK-Sheet2_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fba348c4acb3dd348864dae86772682e
+      internalID: 709314111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENEMY_melee_WALK-Sheet2_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b15fdc5500f48642b1014dd37cfbf99
+      internalID: -192996469
       vertices: []
       indices: 
       edges: []
@@ -191,10 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ENEMY_shotgun_die-Sheet_0: -776384206
-      ENEMY_shotgun_die-Sheet_1: 1610452959
-      ENEMY_shotgun_die-Sheet_2: 395717067
-      ENEMY_shotgun_die-Sheet_3: 348392790
+      ENEMY_melee_WALK-Sheet2_0: 1650173062
+      ENEMY_melee_WALK-Sheet2_1: 1283906758
+      ENEMY_melee_WALK-Sheet2_2: -992309446
+      ENEMY_melee_WALK-Sheet2_3: 705201024
+      ENEMY_melee_WALK-Sheet2_4: 709314111
+      ENEMY_melee_WALK-Sheet2_5: -192996469
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
