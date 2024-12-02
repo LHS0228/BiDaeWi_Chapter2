@@ -4749,6 +4749,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3941386897761316216, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3941386897761316216, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
       propertyPath: m_TagString
       value: Door
       objectReference: {fileID: 0}
@@ -4811,7 +4815,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7429371813666776464, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2626947621512149353, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 752382636523848047, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7792148021451827455, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2708524772781278630, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2111380099854433466, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
 --- !u!1001 &7884934540311607719
 PrefabInstance:
