@@ -41,8 +41,8 @@ public class NextStageDoor : MonoBehaviour
 
     private void Awake()
     {
-        doorCollider = GetComponentInChildren<BoxCollider2D>();
-        anim = GetComponent<Animator>();
+        doorCollider = GetComponent<BoxCollider2D>();
+        anim = GetComponentInParent<Animator>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -82,7 +82,6 @@ public class NextStageDoor : MonoBehaviour
                     doorCollider.enabled = false;
 
                     guideText.SetActive(false);
-                    gameObject.SetActive(false);
                     playerController.isPlayerStop = false;
                     isChice = false;
                 }
