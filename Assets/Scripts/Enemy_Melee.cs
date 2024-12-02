@@ -24,6 +24,8 @@ public class Enemy_Melee : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 2f;
 
+
+
     private Animator animator; // 애니 관련
     private EntityBase entity;
     private float lastAttackTime = 0f; // 공격 텀에 사용됨
@@ -35,12 +37,13 @@ public class Enemy_Melee : MonoBehaviour
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
-
+    private AudioSource audioSource;
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -130,6 +133,7 @@ public class Enemy_Melee : MonoBehaviour
 
     private IEnumerator DieAnimation()
     {
+        SoundSystem.instance.PlaySound("Enemy", "EnemyDie");
         animator.Play("Enemy_Die");
 
         yield return new WaitForSeconds(2f);
@@ -175,6 +179,7 @@ public class Enemy_Melee : MonoBehaviour
             {
                 RecognizeTarget();
                 animator.Play("Enemy_Melee_Walk");
+                SoundSystem.instance.PlayDelaySounds("Character", "Footstep3", 0.5f);
                 yield return null;
             }
         }
@@ -197,6 +202,7 @@ public class Enemy_Melee : MonoBehaviour
             {
                 AttackTarget();
                 yield return new WaitForSeconds(attackTerm);
+                SoundSystem.instance.PlaySound("Enemy", "EnemyMelee"); // 시간 수정 필요할수도
             }
         }
 
@@ -231,6 +237,7 @@ public class Enemy_Melee : MonoBehaviour
 
         animator.Play("Enemy_Melee_Attack");
 
+        
         yield return new WaitForSeconds(0.2f);
 
         if (player != null) 

@@ -23,18 +23,21 @@ public class Enemy_Shield : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 2f;
 
+
+
     private Animator animator; 
     private EntityBase entity;
     private float lastAttackTime = 0f; // 
     private bool isDead = false;
     private bool isSpawn = false;
     private bool isAttack = false;
+    private bool isDamaged = false;
+    private EntityStats stats;
 
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
-    private WeaponType weaponType;
 
     private void Awake()
     {
@@ -58,7 +61,6 @@ public class Enemy_Shield : MonoBehaviour
     private void Update()
     {
         Debug.Log($"{enemyState}");
-        CheckPlayerGunType();
     }
     public void Setup(Transform target)
     {
@@ -243,22 +245,4 @@ public class Enemy_Shield : MonoBehaviour
         isAttack = false;
     }
 
-    private void CheckPlayerGunType()
-    {
-        switch (weaponType)
-        {
-            case WeaponType.None:
-
-                break;
-            case WeaponType.Pistol:
-
-                break;
-            case WeaponType.Rifle:
-
-                break;
-            case WeaponType.ShotGun:
-
-                break;
-        }
-    }
 }

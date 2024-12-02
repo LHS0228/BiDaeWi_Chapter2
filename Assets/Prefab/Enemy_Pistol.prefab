@@ -154,7 +154,7 @@ MonoBehaviour:
     mobType: 2
     damage: 5
     cooldownTime: 5
-    currentHP: 0
+    currentHP: 1
     maxHP: 2
 --- !u!114 &8033903152962332848
 MonoBehaviour:
