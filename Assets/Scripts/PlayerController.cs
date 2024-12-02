@@ -80,7 +80,10 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
 
         if (x > 0 || x < 0)
+        {
             anim.SetBool("isWalk", true);
+            SoundSystem.instance.PlayDelaySounds("Character", "Footstep2", 0.25f);
+        }
         else
             anim.SetBool("isWalk", false);
     }

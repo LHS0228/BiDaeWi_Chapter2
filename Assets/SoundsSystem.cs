@@ -9,6 +9,8 @@ public class SoundSystem : MonoBehaviour
     private Dictionary<string, List<AudioClip>> soundGroups;
     public AudioSource bgmSource;
 
+    private Coroutine nowCoroutine;
+
     private void Awake()
     {
         if (instance == null)
@@ -150,6 +152,23 @@ public class SoundSystem : MonoBehaviour
             return audioSourcePool[0].volume;
         }
         return 1.0f;
+    }
+
+    public void PlayDelaySounds(string group, string clipName, float second)
+    {
+        if(nowCoroutine == null)
+        {
+            nowCoroutine = StartCoroutine(DelaySFXPlaying(group, clipName, second));
+        }
+    }
+
+    private IEnumerator DelaySFXPlaying(string group, string clipName, float second)
+    {
+        PlaySound(group, clipName);
+
+        yield return new WaitForSeconds(second);
+
+        nowCoroutine = null;
     }
 }
 

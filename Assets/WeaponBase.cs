@@ -23,6 +23,7 @@ public class WeaponBase : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl) && collision.GetComponent<PlayerAttack>())
         {
+            SoundSystem.instance.PlaySound("Character", "GetGun");
             collision.GetComponent<PlayerAttack>().weaponType = weaponType;
             collision.GetComponent<PlayerAttack>().maxBullet = maxBullet;
             collision.GetComponent<PlayerAttack>().loadBullet = loadBullet;
