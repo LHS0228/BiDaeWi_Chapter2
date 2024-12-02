@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public enum EnemyState { None = -1, Idle = 0, Pursuit, Attack, Die, }
@@ -39,12 +40,14 @@ public class EnemyAI : MonoBehaviour
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
+    private EntityStats stats;
 
     private void Awake()
     {
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         typeIndex = (int)entity.Stats.mobType;
+        stats = GetComponent<EntityStats>();
     }
 
     private void OnEnable()
@@ -136,6 +139,7 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator DieAnimation()
     {
+        SoundSystem.instance.PlaySound("Enemy", "EnemyDie");
         animator.Play("Enemy_Die");
 
         yield return new WaitForSeconds(2f);
@@ -198,6 +202,7 @@ public class EnemyAI : MonoBehaviour
             {
                 RecognizeTarget();
                 animator.Play("Enemy_Walk");
+                SoundSystem.instance.PlayDelaySounds("Character", "Footstep3", 0.5f);
                 yield return null;
             }
         }
@@ -219,6 +224,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 AttackTarget();
+                SoundSystem.instance.PlaySound("Enemy", "EnemyPistol");
                 yield return new WaitForSeconds(attackTerm);
             }
         }

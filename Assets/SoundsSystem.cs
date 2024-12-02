@@ -60,6 +60,8 @@ public class SoundSystem : MonoBehaviour
         soundGroups["BGM"] = new List<AudioClip>(Resources.LoadAll<AudioClip>("Sounds/BGM"));
         soundGroups["Button"] = new List<AudioClip>(Resources.LoadAll<AudioClip>("Sounds/Button"));
         soundGroups["Weapon"] = new List<AudioClip>(Resources.LoadAll<AudioClip>("Sounds/Weapon"));
+        soundGroups["SFX"] = new List<AudioClip>(Resources.LoadAll<AudioClip>("Sounds/SFX"));
+        soundGroups["Enemy"] = new List<AudioClip>(Resources.LoadAll<AudioClip>("Sounds/Enemy"));
     }
 
     public void PlaySound(string group, string clipName)
