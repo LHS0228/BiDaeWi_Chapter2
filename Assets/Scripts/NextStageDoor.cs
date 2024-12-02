@@ -33,9 +33,18 @@ public class NextStageDoor : MonoBehaviour
     [Header("[플레이어]")]
     [SerializeField] private PlayerController playerController;
 
+    private BoxCollider2D doorCollider;
+    private Animator anim;
+
     private bool isChice;
     private Choice isNoYes;
-    
+
+    private void Awake()
+    {
+        doorCollider = GetComponentInChildren<BoxCollider2D>();
+        anim = GetComponent<Animator>();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -45,15 +54,6 @@ public class NextStageDoor : MonoBehaviour
             isChice = true;
         }
     }
-
-    /*
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        guideText.SetActive(false);
-        isChice = false;
-        isNoYes = Choice.None;
-    }
-    */
 
     private void Update()
     {
@@ -78,6 +78,9 @@ public class NextStageDoor : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Debug.Log("입장");
+                    anim.enabled = true;
+                    doorCollider.enabled = false;
+
                     guideText.SetActive(false);
                     gameObject.SetActive(false);
                     playerController.isPlayerStop = false;
