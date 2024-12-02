@@ -1681,6 +1681,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 700936779}
   m_CullTransparentMesh: 1
+--- !u!1 &810100924 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1539358538115960150, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+  m_PrefabInstance: {fileID: 6478607034125625131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &810100928
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810100924}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8eb4e7e13fbadcf49a9706cebf55fabc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &820534205
 GameObject:
   m_ObjectHideFlags: 0
@@ -4695,9 +4721,21 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1169768831932062493, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: nextStage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169768831932062493, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: isNextDoor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169768831932062493, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 913981179}
+    - target: {fileID: 1539358538115960150, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2105340110415754619, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4729,6 +4767,22 @@ PrefabInstance:
     - target: {fileID: 3941386897761316216, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
       propertyPath: m_TagString
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154476822570252429, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_text
+      value: Stay
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154476822570252429, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479118284220194186, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479118284220194186, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 2164260863
       objectReference: {fileID: 0}
     - target: {fileID: 5849233411753121643, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
       propertyPath: m_Layer
@@ -4786,10 +4840,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8255362432119877569, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_text
+      value: Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255362432119877569, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498452423968641841, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1539358538115960150, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 810100928}
   m_SourcePrefab: {fileID: 100100000, guid: b480f812f1c52ca4ab60f006eb3e1dba, type: 3}
 --- !u!1001 &7884934540311607719
 PrefabInstance:

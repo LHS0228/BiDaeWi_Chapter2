@@ -22,6 +22,9 @@ public enum Choice
 
 public class NextStageDoor : MonoBehaviour
 {
+    [Header("해당 문은 다음 스테이지로 가는 문인가요?"), SerializeField]
+    private bool isNextDoor;
+
     [Header("[다음으로 넘어가는 스테이지]")]
     [SerializeField] private StageName nextStage;
 
@@ -38,6 +41,7 @@ public class NextStageDoor : MonoBehaviour
 
     private bool isChice;
     private Choice isNoYes;
+    private Coroutine nowCoroutine;
 
     private void Awake()
     {
@@ -47,17 +51,32 @@ public class NextStageDoor : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (isNextDoor)
         {
-            guideText.SetActive(true);
-            playerController.isPlayerStop = true;
-            isChice = true;
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                guideText.SetActive(true);
+                playerController.isPlayerStop = true;
+                isChice = true;
+            }
+        }
+        else
+        {
+            if (nowCoroutine == null)
+            {
+                StartCoroutine(MapOpenDoor(collision));
+            }
         }
     }
 
     private void Update()
     {
-        if(isChice)
+        ChooseOpen();
+    }
+
+    private void ChooseOpen()
+    {
+        if (isChice)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -69,7 +88,7 @@ public class NextStageDoor : MonoBehaviour
             }
         }
 
-        switch(isNoYes)
+        switch (isNoYes)
         {
             case Choice.Yes:
                 noText.color = Color.white;
@@ -105,5 +124,17 @@ public class NextStageDoor : MonoBehaviour
                 yesText.color = Color.white;
                 break;
         }
+    }
+
+    //스테이지 이동 X
+    private IEnumerator MapOpenDoor(Collision2D collision)
+    {
+        collision.gameObject.GetComponent<PlayerController>().isPlayerStop = true;
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        anim.enabled = true;
+        doorCollider.enabled = false;
+        collision.gameObject.GetComponent<PlayerController>().isPlayerStop = false;
     }
 }
