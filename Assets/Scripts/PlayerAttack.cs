@@ -104,6 +104,7 @@ public class PlayerAttack : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         playerController.anim.Play("Knife");
+                        SoundSystem.instance.PlaySound("Weapon", "Knife");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
                         AttackTurn();
@@ -137,6 +138,7 @@ public class PlayerAttack : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         AttackTurn();
+                        SoundSystem.instance.PlaySound("Weapon", "PistolShot");
                         playerController.anim.Play("Pistol");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
@@ -171,6 +173,7 @@ public class PlayerAttack : MonoBehaviour
                     {
                         AttackTurn();
                         playerController.anim.Play("ShotGun");
+                        SoundSystem.instance.PlaySound("Weapon", "ShotgunShot");
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
 
@@ -210,6 +213,7 @@ public class PlayerAttack : MonoBehaviour
 
                         AttackTurn();
                         playerController.anim.Play("Rifle");
+                        SoundSystem.instance.PlaySound("Weapon", "RifleShot");
                         StartCoroutine(DelayTime());
 
                         cameraShake.Shake(0.2f, 0.1f);
