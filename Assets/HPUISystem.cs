@@ -25,7 +25,7 @@ public class HPUISystem : MonoBehaviour
             //데미지
             if(nowHP > (int)playerBase.GetHp())
             {
-                //데미지 이펙트 (AND 소리)
+                SoundSystem.instance.PlaySound("Character", "Hit");
             }
             //회복
             else

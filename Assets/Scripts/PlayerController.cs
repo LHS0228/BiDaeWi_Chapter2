@@ -92,6 +92,11 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.F) && isHighGratify && stamina > 0 && !gameObject.GetComponent<PlayerAttack>().isAttackStop)
         {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                SoundSystem.instance.PlaySound("Character", "Hide");
+            }
+
             isHide = true;
             anim.SetBool("isHide", true);
             isMoveStop = true;
