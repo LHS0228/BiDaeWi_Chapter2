@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         if (x > 0 || x < 0)
         {
             anim.SetBool("isWalk", true);
-            SoundSystem.instance.PlayDelaySounds("Character", "Footstep2", 0.25f);
+            SoundSystem.instance.PlayDelaySounds("Character", "Footstep3", 0.25f);
         }
         else
             anim.SetBool("isWalk", false);
