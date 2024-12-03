@@ -49,10 +49,13 @@ public class PlayerAttack : MonoBehaviour
     private bool isRifleAttacking; //라이플 관련
     private Coroutine rifleCoroutine;
     private Coroutine reloadCoroutine;
+    private EntityBase entity;
 
     private void Awake()
     {
         playerController = GetComponentInParent<PlayerController>();
+        entity = GetComponentInParent<EntityBase>();
+        entity.IsInvincible = false;
     }
 
     void Update()
@@ -423,5 +426,9 @@ public class PlayerAttack : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(shotGunDistance, new Vector3(5.25f, 2.5f));
         }
+    }
+    public WeaponType GetWeaponType()
+    {
+        return weaponType;
     }
 }

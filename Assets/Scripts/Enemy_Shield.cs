@@ -15,6 +15,8 @@ public class Enemy_Shield : MonoBehaviour
     private Transform target;
     [SerializeField]
     private BoxCollider2D boxCollider;
+    [SerializeField]
+    private BoxCollider2D boxCollider2;
 
     [SerializeField]
     private float attackRange = 5f;
@@ -31,19 +33,25 @@ public class Enemy_Shield : MonoBehaviour
     private bool isDead = false;
     private bool isSpawn = false;
     private bool isAttack = false;
-    private bool isDamaged = false;
     private EntityStats stats;
 
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
+    [SerializeField]
+    private PlayerAttack playerAttack;
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider2 = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
+        if( playerAttack != null ) 
+        {
+            playerAttack = FindObjectOfType<PlayerAttack>();
+        }
     }
 
     private void OnEnable()
@@ -60,7 +68,9 @@ public class Enemy_Shield : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"{enemyState}");
+        playerAttack.GetWeaponType();
+        Debug.Log($"{playerAttack.GetWeaponType()}");
+        PlayerWeapon();
     }
     public void Setup(Transform target)
     {
@@ -243,6 +253,18 @@ public class Enemy_Shield : MonoBehaviour
         yield return new WaitForSeconds(attackTerm - 0.2f);
 
         isAttack = false;
+    }
+
+    private void PlayerWeapon()
+    {
+        if(playerAttack.GetWeaponType() != WeaponType.ShotGun)
+        {
+            entity.IsInvincible = true;
+        }
+        else
+        {
+            entity.IsInvincible = false;
+        }
     }
 
 }
