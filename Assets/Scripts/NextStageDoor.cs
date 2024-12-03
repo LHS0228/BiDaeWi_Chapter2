@@ -96,6 +96,10 @@ public class NextStageDoor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    ScreenSystem.instance.ScreenPlay(false);
+                    isChice = false;
+
+                    /*
                     Debug.Log("입장");
                     anim.enabled = true;
                     doorCollider.enabled = false;
@@ -103,6 +107,7 @@ public class NextStageDoor : MonoBehaviour
                     guideText.SetActive(false);
                     playerController.isPlayerStop = false;
                     isChice = false;
+                    */
                 }
                 break;
 
@@ -112,10 +117,15 @@ public class NextStageDoor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    ScreenSystem.instance.ScreenPlay(false);
+                    isChice = false;
+
+                    /*
                     Debug.Log("입장 거절");
                     guideText.SetActive(false);
                     playerController.isPlayerStop = false;
                     isChice = false;
+                    */
                 }
                 break;
 
