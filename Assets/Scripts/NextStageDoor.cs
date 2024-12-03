@@ -96,10 +96,6 @@ public class NextStageDoor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    ScreenSystem.instance.ScreenPlay(false);
-                    isChice = false;
-
-                    /*
                     Debug.Log("¿‘¿Â");
                     anim.enabled = true;
                     doorCollider.enabled = false;
@@ -107,7 +103,6 @@ public class NextStageDoor : MonoBehaviour
                     guideText.SetActive(false);
                     playerController.isPlayerStop = false;
                     isChice = false;
-                    */
                 }
                 break;
 
@@ -140,11 +135,15 @@ public class NextStageDoor : MonoBehaviour
     private IEnumerator MapOpenDoor(Collision2D collision)
     {
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = true;
+        playerController.anim.Play("Kick");
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         anim.enabled = true;
         doorCollider.enabled = false;
+
+        yield return new WaitForSecondsRealtime(0.4f);
+        playerController.anim.Play("Idle");
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = false;
     }
 }
