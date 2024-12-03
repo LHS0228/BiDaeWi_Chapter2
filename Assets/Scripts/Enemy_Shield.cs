@@ -15,8 +15,6 @@ public class Enemy_Shield : MonoBehaviour
     private Transform target;
     [SerializeField]
     private BoxCollider2D boxCollider;
-    [SerializeField]
-    private BoxCollider2D boxCollider2;
 
     [SerializeField]
     private float attackRange = 5f;
@@ -45,7 +43,6 @@ public class Enemy_Shield : MonoBehaviour
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        boxCollider2 = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         if( playerAttack != null ) 
