@@ -40,14 +40,12 @@ public class EnemyAI : MonoBehaviour
     private LayerMask layerMask;
     int typeIndex;
     private EnemyState enemyState = EnemyState.None;
-    private EntityStats stats;
 
     private void Awake()
     {
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         typeIndex = (int)entity.Stats.mobType;
-        stats = GetComponent<EntityStats>();
     }
 
     private void OnEnable()
