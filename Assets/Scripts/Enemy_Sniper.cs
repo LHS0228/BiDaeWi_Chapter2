@@ -34,6 +34,9 @@ public class Enemy_Sniper : MonoBehaviour
     private Color laserColor = Color.magenta;
 
 
+    [SerializeField]
+    private PlayerController playerController;
+
     private Animator animator; // 애니 관련
     private EntityBase entity;
     private bool isDead = false;
@@ -49,6 +52,12 @@ public class Enemy_Sniper : MonoBehaviour
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         lineRenderer.enabled = false;
+        playerController = GetComponent<PlayerController>();
+
+        if( playerController == null ) 
+        {
+            playerController = FindObjectOfType<PlayerController>();
+        }
     }
 
     private void OnEnable()
@@ -66,6 +75,7 @@ public class Enemy_Sniper : MonoBehaviour
     private void Update()
     {
         Debug.Log($"{enemyState}");
+        Debug.Log($"{playerController.isHide}");
     }
     public void Setup(Transform target)
     {
@@ -158,7 +168,7 @@ public class Enemy_Sniper : MonoBehaviour
                 ChangeState(Enemy_Sniper_State.Die);
                 yield return null;
             }
-            else
+            else if (!playerController.isHide)
             {
                 lineRenderer.SetPosition(0, SpawnPoint.position);
                 lineRenderer.SetPosition(1, target.position);
@@ -173,6 +183,12 @@ public class Enemy_Sniper : MonoBehaviour
                 }
                 yield return null;
             }
+            else if(playerController.isHide)
+            {
+                ChangeState(Enemy_Sniper_State.Idle);
+                lineRenderer.enabled = false;
+            }
+
         }
 
     }
@@ -183,7 +199,7 @@ public class Enemy_Sniper : MonoBehaviour
         isDead = true;
 
         animator.SetBool("isDead", true);
-
+        lineRenderer.enabled = false;
         yield return StartCoroutine(DieAnimation());
     }
 
