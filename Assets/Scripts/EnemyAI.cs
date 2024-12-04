@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour
                     ChangeState(EnemyState.Pursuit);
                 }
             }
-            if (distance > recognizeRange)
+            if (distance > recognizeRange && !isDead)
             {
                 ChangeState(EnemyState.Idle);
             }
@@ -242,6 +242,7 @@ public class EnemyAI : MonoBehaviour
         animator.SetBool("isDead", true);
 
         yield return StartCoroutine(DieAnimation());
+
     }
 
 }

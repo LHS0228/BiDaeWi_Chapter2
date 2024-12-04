@@ -452,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 758081843235299512, guid: 3905772fee6f2fc49975927d543b6587, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2917094130038153006, guid: 3905772fee6f2fc49975927d543b6587, type: 3}
       propertyPath: target
@@ -4613,12 +4613,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7794819756838735201, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794819756838735201, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
+      propertyPath: m_Offset.x
+      value: 1.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794819756838735201, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8617590167913823589, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
       propertyPath: m_Name
       value: Enemy_Melee
       objectReference: {fileID: 0}
     - target: {fileID: 8617590167913823589, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8806213379276491973, guid: 6e5fba41e45d0ed49a5ee2d789153641, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

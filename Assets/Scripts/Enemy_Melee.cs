@@ -81,7 +81,7 @@ public class Enemy_Melee : MonoBehaviour
                     ChangeState(Enemy_Melee_State.Pursuit);
                 }
             }
-            if (distance > recognizeRange)
+            if (distance > recognizeRange && !isDead)
             {
                 ChangeState(Enemy_Melee_State.Idle);
             }
