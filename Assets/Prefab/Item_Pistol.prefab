@@ -280,6 +280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guideKey: {fileID: 5835698221058773016}
   weaponType: 1
-  maxBullet: 20
+  maxBullet: 15
   loadBullet: 5
   currentBullet: 5
