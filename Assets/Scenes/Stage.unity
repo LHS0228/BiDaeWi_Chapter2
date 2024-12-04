@@ -4662,6 +4662,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 913981175}
+    - target: {fileID: 8033903152962332848, guid: 5030fc76239a61c4e983a5a2c8b7dee2, type: 3}
+      propertyPath: attackTerm
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
