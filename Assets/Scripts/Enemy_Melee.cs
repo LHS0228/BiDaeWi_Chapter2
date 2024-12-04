@@ -36,7 +36,7 @@ public class Enemy_Melee : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
-    private EnemyState enemyState = EnemyState.None;
+    private Enemy_Melee_State enemyState = Enemy_Melee_State.None;
     private AudioSource audioSource;
     private void Awake()
     {
@@ -48,14 +48,14 @@ public class Enemy_Melee : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangeState(EnemyState.Idle);
+        ChangeState(Enemy_Melee_State.Idle);
         StartCoroutine(UpdateTarget());
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
-        enemyState = EnemyState.None;
+        enemyState = Enemy_Melee_State.None;
     }
 
     private void Update()
@@ -78,12 +78,12 @@ public class Enemy_Melee : MonoBehaviour
             {
                 if (distance <= recognizeRange && distance > attackRange)
                 {
-                    ChangeState(EnemyState.Pursuit);
+                    ChangeState(Enemy_Melee_State.Pursuit);
                 }
             }
             if (distance > recognizeRange)
             {
-                ChangeState(EnemyState.Idle);
+                ChangeState(Enemy_Melee_State.Idle);
             }
 
             Collider2D collider = Physics2D.OverlapCircle(transform.position, attackRange, layerMask);
@@ -94,12 +94,12 @@ public class Enemy_Melee : MonoBehaviour
                 {
                     if (Time.time - lastAttackTime >= attackTerm && isDead == false)
                     {
-                        ChangeState(EnemyState.Attack);
+                        ChangeState(Enemy_Melee_State.Attack);
                     }
                 }
                 else if (distance > attackRange)
                 {
-                    ChangeState(EnemyState.Pursuit);
+                    ChangeState(Enemy_Melee_State.Pursuit);
                 }
             }
 
@@ -142,7 +142,7 @@ public class Enemy_Melee : MonoBehaviour
 
     }
 
-    public void ChangeState(EnemyState state)
+    public void ChangeState(Enemy_Melee_State state)
     {
         if (enemyState == state) return;
 
@@ -155,11 +155,11 @@ public class Enemy_Melee : MonoBehaviour
 
     private IEnumerator Idle()
     {
-        while (enemyState == EnemyState.Idle)
+        while (enemyState == Enemy_Melee_State.Idle)
         {
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Melee_State.Die);
             }
             animator.SetBool("isWalk", false);
             animator.Play("Enemy_Melee_Idle");
@@ -169,11 +169,11 @@ public class Enemy_Melee : MonoBehaviour
 
     private IEnumerator Pursuit()
     {
-        while (enemyState == EnemyState.Pursuit)
+        while (enemyState == Enemy_Melee_State.Pursuit)
         {
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Melee_State.Die);
             }
             else
             {
@@ -187,16 +187,16 @@ public class Enemy_Melee : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        while (enemyState == EnemyState.Attack)
+        while (enemyState == Enemy_Melee_State.Attack)
         {
             animator.SetBool("isWalk", false);
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Melee_State.Die);
             }
             else if (Vector2.Distance(transform.position, target.transform.position) > attackRange)
             {
-                ChangeState(EnemyState.Pursuit);
+                ChangeState(Enemy_Melee_State.Pursuit);
             }
             else
             {

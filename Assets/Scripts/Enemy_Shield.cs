@@ -29,14 +29,13 @@ public class Enemy_Shield : MonoBehaviour
     private EntityBase entity;
     private float lastAttackTime = 0f; // 
     private bool isDead = false;
-    private bool isSpawn = false;
     private bool isAttack = false;
     private EntityStats stats;
 
     [SerializeField]
     private LayerMask layerMask;
     int typeIndex;
-    private EnemyState enemyState = EnemyState.None;
+    private Enemy_Shield_State enemyState = Enemy_Shield_State.None;
     [SerializeField]
     private PlayerAttack playerAttack;
 
@@ -53,14 +52,14 @@ public class Enemy_Shield : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangeState(EnemyState.Idle);
+        ChangeState(Enemy_Shield_State.Idle);
         StartCoroutine(UpdateTarget());
     }
 
     private void OnDisable()
     {
         StopAllCoroutines();
-        enemyState = EnemyState.None;
+        enemyState = Enemy_Shield_State.None;
     }
 
     private void Update()
@@ -85,12 +84,12 @@ public class Enemy_Shield : MonoBehaviour
             {
                 if (distance <= recognizeRange && distance > attackRange)
                 {
-                    ChangeState(EnemyState.Pursuit);
+                    ChangeState(Enemy_Shield_State.Pursuit);
                 }
             }
             if (distance > recognizeRange)
             {
-                ChangeState(EnemyState.Idle);
+                ChangeState(Enemy_Shield_State.Idle);
             }
 
             Collider2D collider = Physics2D.OverlapCircle(transform.position, attackRange, layerMask);
@@ -101,12 +100,12 @@ public class Enemy_Shield : MonoBehaviour
                 {
                     if (Time.time - lastAttackTime >= attackTerm && isDead == false)
                     {
-                        ChangeState(EnemyState.Attack);
+                        ChangeState(Enemy_Shield_State.Attack);
                     }
                 }
                 else if (distance > attackRange)
                 {
-                    ChangeState(EnemyState.Pursuit);
+                    ChangeState(Enemy_Shield_State.Pursuit);
                 }
             }
 
@@ -141,13 +140,14 @@ public class Enemy_Shield : MonoBehaviour
     private IEnumerator DieAnimation()
     {
         animator.Play("Enemy_Die");
+        SoundSystem.instance.PlaySound("Enemy", "EnemyDie");
 
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
 
     }
 
-    public void ChangeState(EnemyState state)
+    public void ChangeState(Enemy_Shield_State state)
     {
         if (enemyState == state) return;
 
@@ -160,11 +160,11 @@ public class Enemy_Shield : MonoBehaviour
 
     private IEnumerator Idle()
     {
-        while (enemyState == EnemyState.Idle)
+        while (enemyState == Enemy_Shield_State.Idle)
         {
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Shield_State.Die);
             }
             animator.SetBool("isWalk", false);
             animator.Play("Enemy_Shield_Idle");
@@ -174,11 +174,11 @@ public class Enemy_Shield : MonoBehaviour
 
     private IEnumerator Pursuit()
     {
-        while (enemyState == EnemyState.Pursuit)
+        while (enemyState == Enemy_Shield_State.Pursuit)
         {
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Shield_State.Die);
             }
             else
             {
@@ -191,16 +191,16 @@ public class Enemy_Shield : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        while (enemyState == EnemyState.Attack)
+        while (enemyState == Enemy_Shield_State.Attack)
         {
             animator.SetBool("isWalk", false);
             if (entity.Stats.currentHP <= 0)
             {
-                ChangeState(EnemyState.Die);
+                ChangeState(Enemy_Shield_State.Die);
             }
             else if (Vector2.Distance(transform.position, target.transform.position) > attackRange)
             {
-                ChangeState(EnemyState.Pursuit);
+                ChangeState(Enemy_Shield_State.Pursuit);
             }
             else
             {
@@ -215,10 +215,6 @@ public class Enemy_Shield : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
-        if (!isSpawn)
-        {
-            isSpawn = true;
-        }
 
         animator.SetBool("isDead", true);
 
@@ -236,7 +232,6 @@ public class Enemy_Shield : MonoBehaviour
     private IEnumerator AttackAnim(EntityBase player)
     {
         isAttack = true;
-        animator.SetTrigger("isAttack");
 
         animator.Play("Enemy_Shield_Walk");
 
@@ -247,7 +242,7 @@ public class Enemy_Shield : MonoBehaviour
             player.TakeDamage(1);
         }
 
-        yield return new WaitForSeconds(attackTerm - 0.2f);
+        yield return new WaitForSeconds(1f);
 
         isAttack = false;
     }
