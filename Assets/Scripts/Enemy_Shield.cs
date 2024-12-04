@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public enum Enemy_Shield_State { None = -1, Idle = 0, Pursuit, Attack, Die, }
 
@@ -30,6 +31,7 @@ public class Enemy_Shield : MonoBehaviour
     private float lastAttackTime = 0f; // 
     private bool isDead = false;
     private bool isAttack = false;
+    private bool isMove = true;
     private EntityStats stats;
 
     [SerializeField]
@@ -38,6 +40,9 @@ public class Enemy_Shield : MonoBehaviour
     private Enemy_Shield_State enemyState = Enemy_Shield_State.None;
     [SerializeField]
     private PlayerAttack playerAttack;
+
+    private float moveStopDuration = 1.5f;
+    private float stopTime = 0f;
 
     private void Awake()
     {
@@ -124,7 +129,7 @@ public class Enemy_Shield : MonoBehaviour
     private void RecognizeTarget()
     {
         float distance = Vector2.Distance(transform.position, target.transform.position);
-        if (distance > attackRange && distance <= recognizeRange)
+        if (distance > attackRange && distance <= recognizeRange && isMove)
         {
             Vector2 targetPosition = target.transform.position;
             Vector2 newPosition = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
@@ -204,6 +209,7 @@ public class Enemy_Shield : MonoBehaviour
             }
             else
             {
+                stopTime += Time.deltaTime;
                 AttackTarget();
                 yield return new WaitForSeconds(attackTerm);
             }
@@ -241,6 +247,7 @@ public class Enemy_Shield : MonoBehaviour
         {
             player.TakeDamage(1);
         }
+        StartCoroutine(MoveStop());
 
         yield return new WaitForSeconds(1f);
 
@@ -259,4 +266,11 @@ public class Enemy_Shield : MonoBehaviour
         }
     }
 
+    private IEnumerator MoveStop()
+    {
+        isMove = false;
+        ChangeState(Enemy_Shield_State.Idle);
+        yield return new WaitForSeconds(moveStopDuration);
+        isMove = true;
+    }
 }
