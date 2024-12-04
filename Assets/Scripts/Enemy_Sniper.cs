@@ -168,22 +168,25 @@ public class Enemy_Sniper : MonoBehaviour
                 ChangeState(Enemy_Sniper_State.Die);
                 yield return null;
             }
-            else if (!playerController.isHide)
+            if (!playerController.isHide)
             {
                 lineRenderer.SetPosition(0, SpawnPoint.position);
                 lineRenderer.SetPosition(1, target.position);
 
                 recognizeTime += Time.deltaTime;
-                if(recognizeTime >= aimDuration)
+                if(recognizeTime >= aimDuration && !isCoolTime)
                 {
                     AttackTarget();
                     SoundSystem.instance.PlaySound("Enemy", "EnemySniper");
                     StartCoroutine(CoolTime());
-                    yield break;
+                    yield return null;
                 }
-                yield return null;
+                else
+                {
+                    yield return null;
+                }
             }
-            else if(playerController.isHide)
+            else
             {
                 ChangeState(Enemy_Sniper_State.Idle);
                 lineRenderer.enabled = false;
@@ -210,8 +213,11 @@ public class Enemy_Sniper : MonoBehaviour
         recognizeTime = 0f;
         lineRenderer.enabled = false;
 
+        ChangeState(Enemy_Sniper_State.Idle);
         yield return new WaitForSeconds(aimCoolTime);
         isCoolTime = false;
+
+
     }
 
     private void AttackTarget()
