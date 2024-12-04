@@ -353,15 +353,15 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case WeaponType.Pistol:
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
                 break;
 
             case WeaponType.ShotGun:
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(0.7f);
                 break;
 
             case WeaponType.Rifle:
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
                 break;
                 
         }
