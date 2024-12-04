@@ -144,7 +144,7 @@ public class Enemy_Shield : MonoBehaviour
 
     private IEnumerator DieAnimation()
     {
-        animator.Play("Enemy_Die");
+        animator.Play("Enemy_Shield_Die");
         SoundSystem.instance.PlaySound("Enemy", "EnemyDie");
 
         yield return new WaitForSeconds(2f);
