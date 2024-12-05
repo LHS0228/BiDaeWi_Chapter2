@@ -32,6 +32,40 @@ public class UISystem : MonoBehaviour
         maxBullet = new int[4];
     }
 
+    private void Start()
+    {
+        latestWeaponType = playerAttackBase.weaponType;
+
+        for (int i = 0; i < gunOjbect.Length; i++)
+        {
+            gunOjbect[i].SetActive(false);
+        }
+
+        switch (latestWeaponType)
+        {
+            case WeaponType.None:
+                maxBullet[0] = playerAttackBase.maxBullet;
+                currentBullet[0] = playerAttackBase.currentBullet;
+                gunOjbect[0].SetActive(true);
+                break;
+            case WeaponType.Pistol:
+                maxBullet[1] = playerAttackBase.maxBullet;
+                currentBullet[1] = playerAttackBase.currentBullet;
+                gunOjbect[1].SetActive(true);
+                break;
+            case WeaponType.Rifle:
+                maxBullet[2] = playerAttackBase.maxBullet;
+                currentBullet[2] = playerAttackBase.currentBullet;
+                gunOjbect[2].SetActive(true);
+                break;
+            case WeaponType.ShotGun:
+                maxBullet[3] = playerAttackBase.maxBullet;
+                currentBullet[3] = playerAttackBase.currentBullet;
+                gunOjbect[3].SetActive(true);
+                break;
+        }
+    }
+
     private void Update()
     {
         if (latestWeaponType != playerAttackBase.weaponType)
