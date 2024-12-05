@@ -195,7 +195,7 @@ public class PlayerAttack : MonoBehaviour
                             {
                                 if (hit[i].CompareTag("Enemy"))
                                 {
-                                    hit[i].gameObject.GetComponent<MobBase>().TakeDamage(1); // 데미지 입히기
+                                    hit[i].gameObject.GetComponent<MobBase>().TakeDamage(3); // 데미지 입히기
                                     GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, hit[i].gameObject.transform.position, Quaternion.identity);
                                     Destroy(hitEffect, 1f);
                                 }
@@ -226,7 +226,7 @@ public class PlayerAttack : MonoBehaviour
                         {
                             if (scanObject.CompareTag("Enemy"))
                             {
-                                scanObject.GetComponent<MobBase>().TakeDamage(1);
+                                scanObject.GetComponent<MobBase>().TakeDamage(2);
                                 GameObject hitEffect = Instantiate(hitEffectPrefab_Enemy, attackHit.point, Quaternion.identity);
                                 Destroy(hitEffect, 1f);
 
