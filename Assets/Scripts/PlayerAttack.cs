@@ -111,6 +111,7 @@ public class PlayerAttack : MonoBehaviour
                         StartCoroutine(moveStopTime());
                         StartCoroutine(DelayTime());
                         AttackTurn();
+
                         knifeDistance = (Vector2)transform.position + new Vector2(1 * (gameObject.GetComponent<SpriteRenderer>().flipX ? -1 : 1), 0);
                         GameObject knifeEffect = Instantiate(knifeEffectPrefab, knifeDistance, Quaternion.identity);
                         knifeEffect.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
@@ -273,23 +274,28 @@ public class PlayerAttack : MonoBehaviour
 
     private void AttackTurn()
     {
-        if (mouseDirection.x <= Camera.main.ScreenToWorldPoint(transform.position).normalized.x)
+        // 마우스 월드 위치 가져오기
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // 캐릭터의 방향 결정
+        if (mouseWorldPosition.x <= transform.position.x)
         {
             Debug.Log("왼쪽");
             playerController.spriteRenderer.flipX = true;
 
-            // 캐릭터의 위치를 기준으로 `attackRange` 위치를 설정
-            attackRange.transform.position = transform.position + new Vector3(-1, 0, 0);
+            // 캐릭터의 방향에 따라 공격 범위 위치 설정
+            attackRange.transform.position = transform.position + Vector3.left;
         }
         else
         {
             Debug.Log("오른쪽");
             playerController.spriteRenderer.flipX = false;
 
-            // 캐릭터의 위치를 기준으로 `attackRange` 위치를 설정
-            attackRange.transform.position = transform.position + new Vector3(1, 0, 0);
+            // 캐릭터의 방향에 따라 공격 범위 위치 설정
+            attackRange.transform.position = transform.position + Vector3.right;
         }
     }
+
 
     // 일직선 이펙트 생성 함수
     private void CreateLineEffect(Vector3 origin, Vector2 direction, float distance)
