@@ -223,7 +223,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  laserColor: {r: 1, g: 0, b: 1, a: 1}
+  laserColor: {r: 1, g: 0, b: 0, a: 1}
+  playerController: {fileID: 0}
 --- !u!120 &995947946331090978
 LineRenderer:
   serializedVersion: 2
