@@ -155,12 +155,12 @@ public class NextStageDoor : MonoBehaviour
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = true;
         playerController.anim.Play("Kick");
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        yield return new WaitForSecondsRealtime(0.2f);
 
         anim.enabled = true;
         doorCollider.enabled = false;
 
-        yield return new WaitForSecondsRealtime(0.4f);
+        yield return new WaitForSecondsRealtime(0.2f);
         playerController.anim.Play("Idle");
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = false;
     }
