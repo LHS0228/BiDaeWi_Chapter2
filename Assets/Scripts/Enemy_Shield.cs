@@ -82,6 +82,11 @@ public class Enemy_Shield : MonoBehaviour
     {
         while (true)
         {
+
+            if (enemyState == Enemy_Shield_State.Die)
+            {
+                yield break;
+            }
             float distance = Vector2.Distance(transform.position, target.transform.position);
 
             Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
@@ -156,6 +161,11 @@ public class Enemy_Shield : MonoBehaviour
     {
         if (enemyState == state) return;
 
+        if (enemyState == Enemy_Shield_State.Die)
+        {
+            return;
+        }
+
         StopCoroutine(enemyState.ToString());
 
         enemyState = state;
@@ -221,7 +231,7 @@ public class Enemy_Shield : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
-
+        boxCollider.enabled = false;
         animator.SetBool("isDead", true);
 
         yield return StartCoroutine(DieAnimation());

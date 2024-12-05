@@ -44,11 +44,12 @@ public class Enemy_Sniper : MonoBehaviour
     private bool isCoolTime = false;
     private float recognizeTime = 0f; // 조준 시간 초기화하려고 씀
 
-
+    private BoxCollider2D boxCollider;
     private Enemy_Sniper_State enemyState = Enemy_Sniper_State.None;
 
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         lineRenderer.enabled = false;
@@ -86,6 +87,10 @@ public class Enemy_Sniper : MonoBehaviour
     {
         while (true)
         {
+            if (enemyState == Enemy_Sniper_State.Die)
+            {
+                yield break;
+            }
             float distance = Vector2.Distance(transform.position, target.transform.position);
             if (distance > attackRange)
             {
@@ -136,6 +141,10 @@ public class Enemy_Sniper : MonoBehaviour
     {
         if (enemyState == state) return;
 
+        if( enemyState == Enemy_Sniper_State.Die)
+        {
+            return;
+        }
         StopCoroutine(enemyState.ToString());
 
         enemyState = state;
@@ -200,7 +209,7 @@ public class Enemy_Sniper : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
-
+        boxCollider.enabled = false;
         animator.SetBool("isDead", true);
         lineRenderer.enabled = false;
         yield return StartCoroutine(DieAnimation());

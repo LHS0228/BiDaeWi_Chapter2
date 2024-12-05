@@ -71,6 +71,10 @@ public class Enemy_Melee : MonoBehaviour
     {
         while (true)
         {
+            if (enemyState == Enemy_Melee_State.Die)
+            {
+                yield break;
+            }
             float distance = Vector2.Distance(transform.position, target.transform.position);
 
             Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
@@ -146,6 +150,11 @@ public class Enemy_Melee : MonoBehaviour
     {
         if (enemyState == state) return;
 
+        if (enemyState == Enemy_Melee_State.Die)
+        {
+            return;
+        }
+
         StopCoroutine(enemyState.ToString());
 
         enemyState = state;
@@ -212,6 +221,8 @@ public class Enemy_Melee : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
+
+        boxCollider.enabled = false;
         if (!isSpawn)
         {
             isSpawn = true;

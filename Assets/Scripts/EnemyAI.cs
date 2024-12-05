@@ -35,6 +35,7 @@ public class EnemyAI : MonoBehaviour
     private float lastAttackTime = 0f; // °ø°Ý ÅÒ¿¡ »ç¿ëµÊ
     private bool isDead = false;
     private bool isSpawn = false;
+    private BoxCollider2D boxCollider;
 
     [SerializeField]
     private LayerMask layerMask;
@@ -43,6 +44,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         entity = GetComponent<EntityBase>();
         animator = GetComponent<Animator>();
         typeIndex = (int)entity.Stats.mobType;
@@ -73,6 +75,10 @@ public class EnemyAI : MonoBehaviour
     {
         while (true)
         {
+            if (enemyState == EnemyState.Die)
+            {
+                yield break;
+            }
             float distance = Vector2.Distance(transform.position, target.transform.position);
 
             Collider2D collider1 = Physics2D.OverlapCircle(transform.position, recognizeRange, layerMask);
@@ -167,6 +173,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (enemyState == state) return;
 
+        if (enemyState == EnemyState.Die)
+        {
+            return;
+        }
+
         StopCoroutine(enemyState.ToString());
 
         enemyState = state;
@@ -233,6 +244,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
+        boxCollider.enabled = false;
         if (!isSpawn)
         {
             isSpawn = true;
