@@ -52,4 +52,9 @@ public class EntityBase : MonoBehaviour
     {
         return stats.mobType;
     }
+
+    public void HealHP()
+    {
+        stats.currentHP += 1;
+    }
 }
