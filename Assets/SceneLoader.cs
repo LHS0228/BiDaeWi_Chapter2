@@ -25,13 +25,25 @@ public class SceneLoader : MonoBehaviour
         ScreenSystem.instance.ScreenPlay(true);
     }
     
-    public void LoadScene(string SceneName)
+    public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(SceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void LoadSceneDelay(string sceneName, float time)
+    {
+        StartCoroutine(LoadSceneStart(sceneName, time));
+    }
+
+    private IEnumerator LoadSceneStart(string sceneName, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+
+        SceneManager.LoadScene(sceneName);
     }
 }

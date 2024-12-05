@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Vector3 barOriganlSize;
     private Vector3 barOriganlTransform;
+    private bool isDie;
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        OnDead();
         StaminaBarUpdate();
         if (!isPlayerStop)
         {
@@ -174,11 +176,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnDead()
     {
-        if(mobBase.GetHp() < 0)
+        if(mobBase.GetHp() < 1 && isDie == false)
         {
-            //플레이어 죽음 애니메이션 실행
-            //게임 오버 모션
-            //씬 넘어가는 장면
+            isDie = true;
+            SceneLoader.instance.LoadSceneDelay("Ending_Die", 5);
+            ScreenSystem.instance.ScreenPlay(false);
             isPlayerStop = true;
             anim.Play("Die");
         }

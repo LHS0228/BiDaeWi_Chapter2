@@ -124,19 +124,19 @@ public class NextStageDoor : MonoBehaviour
                             break;
 
                         case StageName.Stage_1:
-                            StartCoroutine(MapLoad("Ending_Stage1"));
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage1", 3);
                             break;
                         case StageName.Stage_2:
-                            StartCoroutine(MapLoad("Ending_Stage2"));
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage2", 3);
                             break;
                         case StageName.Stage_3:
-                            StartCoroutine(MapLoad("Ending_Stage3"));
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage3", 3);
                             break;
                         case StageName.Stage_4:
-                            StartCoroutine(MapLoad("Ending_Stage4"));
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage4", 3);
                             break;
                         case StageName.Stage_5:
-                            StartCoroutine(MapLoad("Ending_Stage5"));
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage5", 3);
                             break;
                     }
                 }
@@ -163,12 +163,5 @@ public class NextStageDoor : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.4f);
         playerController.anim.Play("Idle");
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = false;
-    }
-
-    private IEnumerator MapLoad(string sceneName)
-    {
-        yield return new WaitForSecondsRealtime(3);
-
-        SceneLoader.instance.LoadScene(sceneName);
     }
 }
