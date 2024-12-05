@@ -124,7 +124,7 @@ public class NextStageDoor : MonoBehaviour
                             break;
 
                         case StageName.Stage_1:
-                            SceneLoader.instance.LoadSceneDelay("Ending_Stage1", 3);
+                            SceneLoader.instance.LoadSceneDelay("Ending_Stage1", 3); 
                             break;
                         case StageName.Stage_2:
                             SceneLoader.instance.LoadSceneDelay("Ending_Stage2", 3);
