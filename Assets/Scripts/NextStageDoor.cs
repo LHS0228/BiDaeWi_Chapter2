@@ -175,6 +175,7 @@ public class NextStageDoor : MonoBehaviour
 
         anim.enabled = true;
         doorCollider.enabled = false;
+        SoundSystem.instance.PlaySound("SFX", "DoorOpen");
 
         yield return new WaitForSecondsRealtime(0.2f);
         playerController.anim.Play("Idle");

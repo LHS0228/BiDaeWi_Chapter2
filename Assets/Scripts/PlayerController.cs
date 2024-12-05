@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour
             SceneLoader.instance.LoadSceneDelay("Ending_Die", 5);
             ScreenSystem.instance.ScreenPlay(false);
             isPlayerStop = true;
+            gameObject.GetComponent<PlayerAttack>().isAttackStop = true;
             anim.Play("Die");
         }
     }

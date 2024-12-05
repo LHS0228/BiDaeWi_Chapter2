@@ -18,6 +18,11 @@ public class HPUISystem : MonoBehaviour
         nowHP = (int)playerBase.GetHp();
     }
 
+    private void Start()
+    {
+        SoundSystem.instance.PlayBGM("BlackOutFight");
+    }
+
     void Update()
     {
         if (nowHP != (int)playerBase.GetHp())
