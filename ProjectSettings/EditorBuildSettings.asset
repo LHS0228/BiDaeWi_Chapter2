@@ -18,13 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Endings/Ending_Stage1.unity
     guid: 1e572527a9ffcce4995af946a796a4f0
   - enabled: 1
-    path: Assets/Scenes/Endings/Ending_Stage3.unity
+    path: Assets/Scenes/Endings/Ending_Stage2.unity
     guid: ee0db2598aa204947b1bfecf30895a4f
   - enabled: 1
-    path: Assets/Scenes/Endings/Ending_Stage4.unity
+    path: Assets/Scenes/Endings/Ending_Stage3.unity
     guid: 82ef56429df1c7645905b50d0cc04300
   - enabled: 1
-    path: Assets/Scenes/Endings/Ending_Stage4.unity
+    path: Assets/Scenes/Endings/Ending_Stage3.unity
     guid: 82ef56429df1c7645905b50d0cc04300
   - enabled: 1
     path: Assets/Scenes/Endings/Ending_Stage5.unity
