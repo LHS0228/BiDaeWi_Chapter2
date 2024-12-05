@@ -55,6 +55,6 @@ public class EntityBase : MonoBehaviour
 
     public void HealHP()
     {
-        stats.currentHP += 1;
+        if(stats.currentHP < 6) stats.currentHP += 1;
     }
 }
