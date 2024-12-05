@@ -948,7 +948,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Stage
+          m_StringArgument: Title
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2047738016
@@ -971,7 +971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1670110795, guid: 16984e6a0fe5dfb438fda69c707f23ea, type: 3}
+  m_Sprite: {fileID: 1141153256, guid: 16984e6a0fe5dfb438fda69c707f23ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
