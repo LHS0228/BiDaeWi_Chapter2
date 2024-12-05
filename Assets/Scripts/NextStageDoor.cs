@@ -115,12 +115,30 @@ public class NextStageDoor : MonoBehaviour
                     ScreenSystem.instance.ScreenPlay(false);
                     isChice = false;
 
-                    /*
-                    Debug.Log("입장 거절");
-                    guideText.SetActive(false);
-                    playerController.isPlayerStop = false;
-                    isChice = false;
-                    */
+                    switch (nextStage)
+                    {
+                        case StageName.None:
+                            guideText.SetActive(false);
+                            isChice = false;
+                            playerController.isPlayerStop = false;
+                            break;
+
+                        case StageName.Stage_1:
+                            StartCoroutine(MapLoad("Ending_Stage1"));
+                            break;
+                        case StageName.Stage_2:
+                            StartCoroutine(MapLoad("Ending_Stage2"));
+                            break;
+                        case StageName.Stage_3:
+                            StartCoroutine(MapLoad("Ending_Stage3"));
+                            break;
+                        case StageName.Stage_4:
+                            StartCoroutine(MapLoad("Ending_Stage4"));
+                            break;
+                        case StageName.Stage_5:
+                            StartCoroutine(MapLoad("Ending_Stage5"));
+                            break;
+                    }
                 }
                 break;
 
@@ -145,5 +163,12 @@ public class NextStageDoor : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.4f);
         playerController.anim.Play("Idle");
         collision.gameObject.GetComponent<PlayerController>().isPlayerStop = false;
+    }
+
+    private IEnumerator MapLoad(string sceneName)
+    {
+        yield return new WaitForSecondsRealtime(3);
+
+        SceneLoader.instance.LoadScene(sceneName);
     }
 }
