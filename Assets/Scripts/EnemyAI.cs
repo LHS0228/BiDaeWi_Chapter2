@@ -35,6 +35,7 @@ public class EnemyAI : MonoBehaviour
     private float lastAttackTime = 0f; // °ø°Ý ÅÒ¿¡ »ç¿ëµÊ
     private bool isDead = false;
     private bool isSpawn = false;
+    private bool isAttack = false;
     private BoxCollider2D boxCollider;
 
     [SerializeField]
@@ -232,9 +233,13 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                AttackTarget();
-                SoundSystem.instance.PlaySound("Enemy", "EnemyPistol");
-                yield return new WaitForSeconds(attackTerm);
+                isAttack = true;
+                if(isAttack)
+                {
+                    AttackTarget();
+                    SoundSystem.instance.PlaySound("Enemy", "EnemyPistol");
+                    yield return new WaitForSeconds(attackTerm);
+                }
             }
         }
 
@@ -245,6 +250,7 @@ public class EnemyAI : MonoBehaviour
         if (isDead) yield break;
         isDead = true;
         boxCollider.enabled = false;
+        isAttack = false;
         if (!isSpawn)
         {
             isSpawn = true;

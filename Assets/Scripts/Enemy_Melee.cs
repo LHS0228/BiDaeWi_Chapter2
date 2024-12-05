@@ -38,6 +38,7 @@ public class Enemy_Melee : MonoBehaviour
     int typeIndex;
     private Enemy_Melee_State enemyState = Enemy_Melee_State.None;
     private AudioSource audioSource;
+
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -221,7 +222,7 @@ public class Enemy_Melee : MonoBehaviour
     {
         if (isDead) yield break;
         isDead = true;
-
+        isAttack = false;
         boxCollider.enabled = false;
         if (!isSpawn)
         {
