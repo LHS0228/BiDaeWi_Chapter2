@@ -103,6 +103,7 @@ public class NextStageDoor : MonoBehaviour
                     if(nextStage == StageName.Stage_5)
                     {
                         ScreenSystem.instance.ScreenPlay(false);
+                        guideText.SetActive(false);
                         SceneLoader.instance.LoadSceneDelay("Ending_Stage5", 3);
                         break;
                     }
