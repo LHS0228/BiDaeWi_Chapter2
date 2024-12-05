@@ -56,5 +56,7 @@ public class EntityBase : MonoBehaviour
     public void HealHP()
     {
         if(stats.currentHP < 6) stats.currentHP += 1;
+
+        SoundSystem.instance.PlaySound("SFX", "GetHealth");
     }
 }

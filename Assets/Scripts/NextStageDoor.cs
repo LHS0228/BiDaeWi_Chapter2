@@ -96,6 +96,7 @@ public class NextStageDoor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    SoundSystem.instance.PlaySound("SFX", "DoorOpen");
                     Debug.Log("¿‘¿Â");
                     anim.enabled = true;
                     doorCollider.enabled = false;
