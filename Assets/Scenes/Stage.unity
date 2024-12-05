@@ -13982,7 +13982,7 @@ MonoBehaviour:
   maxBullet: 1
   loadBullet: 1
   currentBullet: 1
-  maxRayDistance: 1
+  maxRayDistance: 10
   isAttackStop: 0
 --- !u!1001 &914638123
 PrefabInstance:
@@ -21825,11 +21825,11 @@ MonoBehaviour:
   orginHP: {fileID: 1291074553, guid: 58e191180356f8d428bebd48e86e7c7a, type: 3}
   breakHP: {fileID: -813660518, guid: 58e191180356f8d428bebd48e86e7c7a, type: 3}
   HPBar:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 970889050}
+  - {fileID: 2060692130}
+  - {fileID: 1777048264}
+  - {fileID: 1918504741}
+  - {fileID: 120098016}
 --- !u!224 &1350174347
 RectTransform:
   m_ObjectHideFlags: 0
