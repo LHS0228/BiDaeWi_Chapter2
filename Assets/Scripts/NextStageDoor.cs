@@ -100,9 +100,18 @@ public class NextStageDoor : MonoBehaviour
                     anim.enabled = true;
                     doorCollider.enabled = false;
 
-                    guideText.SetActive(false);
-                    playerController.isPlayerStop = false;
-                    isChice = false;
+                    if(nextStage == StageName.Stage_5)
+                    {
+                        ScreenSystem.instance.ScreenPlay(false);
+                        SceneLoader.instance.LoadSceneDelay("Ending_Stage5", 3);
+                        break;
+                    }
+                    else
+                    {
+                        guideText.SetActive(false);
+                        playerController.isPlayerStop = false;
+                        isChice = false;
+                    }
                 }
                 break;
 
@@ -112,8 +121,11 @@ public class NextStageDoor : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    ScreenSystem.instance.ScreenPlay(false);
-                    isChice = false;
+                    if (nextStage != StageName.Stage_5)
+                    {
+                        ScreenSystem.instance.ScreenPlay(false);
+                        isChice = false;
+                    }
 
                     switch (nextStage)
                     {
@@ -136,7 +148,9 @@ public class NextStageDoor : MonoBehaviour
                             SceneLoader.instance.LoadSceneDelay("Ending_Stage4", 3);
                             break;
                         case StageName.Stage_5:
-                            SceneLoader.instance.LoadSceneDelay("Ending_Stage5", 3);
+                            guideText.SetActive(false);
+                            isChice = false;
+                            playerController.isPlayerStop = false;
                             break;
                     }
                 }
