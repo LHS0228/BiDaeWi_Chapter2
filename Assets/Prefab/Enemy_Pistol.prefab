@@ -175,7 +175,7 @@ MonoBehaviour:
   - {fileID: 7048724264057828736, guid: f08b94f0277fe4b458e6660122641c5c, type: 3}
   attackTerm: 0.5
   target: {fileID: 0}
-  attackRange: 5
+  attackRange: 4.3
   recognizeRange: 8
   moveSpeed: 2
   layerMask:
