@@ -16,7 +16,7 @@ public class MobBase : EntityBase
             case MobType.WalkMan:
                 if (IsDead)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 }
                 else
                 {

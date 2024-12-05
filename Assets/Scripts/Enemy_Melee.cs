@@ -236,7 +236,7 @@ public class Enemy_Melee : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision != null && collision.CompareTag("Player") && !isAttack)
+        if (collision != null && collision.CompareTag("Player") && !isAttack && !isDead)
         {
             StartCoroutine(AttackAnim(collision.GetComponent<EntityBase>()));
         }
